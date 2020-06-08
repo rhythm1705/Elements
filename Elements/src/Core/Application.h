@@ -4,14 +4,16 @@
 
 namespace Elements {
 
-	class  Application {
-	public: 
-		Application();
-		virtual ~Application();
-		
-		void Run();
-	};
+    class  Application {
 
-	Application* CreateApplication();
+    public:
+        Application();
+        virtual ~Application();
 
-}
+        void Run();
+
+    };
+
+    Application* CreateApplication();
+
+} // namespace Elements

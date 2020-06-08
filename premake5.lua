@@ -7,6 +7,8 @@ workspace "Elements"
 		"Release"
 	}
 	
+IncludeDir = {}
+	
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 project "Elements"
@@ -25,6 +27,7 @@ project "Elements"
 	}
 	
 	includedirs {
+		"%{prj.name}/src"
 	}
 	
 	filter "system:windows"
@@ -56,7 +59,7 @@ project "Playground"
 	}
 	
 	includedirs {
-		"Elements/src",
+		"Elements/src"
 	}
 	
 	links {

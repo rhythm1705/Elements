@@ -16,10 +16,18 @@
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Elements.h" />
+    <ClInclude Include="src\MessageSystem\MessageBus.h" />
+    <ClInclude Include="src\MessageSystem\Message.h" />
+    <ClInclude Include="src\Core\System.h" />
+    <ClInclude Include="src\InputSystem\InputSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application.cpp">
       <Filter>Core</Filter>
     </ClCompile>
+    <ClCompile Include="src\MessageSystem\MessageBus.cpp" />
+    <ClCompile Include="src\MessageSystem\Message.cpp" />
+    <ClCompile Include="src\Core\System.cpp" />
+    <ClCompile Include="src\InputSystem\InputSystem.cpp" />
   </ItemGroup>
 </Project>

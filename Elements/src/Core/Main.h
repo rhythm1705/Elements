@@ -7,9 +7,9 @@
 extern Elements::Application* Elements::CreateApplication();
 
 int main() {
-	auto app = Elements::CreateApplication();
-	app->Run();
-	delete app;
+    auto app = Elements::CreateApplication();
+    app->Run();
+    delete app;
 }
 
 #endif
