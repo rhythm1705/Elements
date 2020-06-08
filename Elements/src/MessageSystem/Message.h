@@ -1,9 +1,7 @@
 #pragma once
 
-//#include "Core/System.h"
+#include "elmtpch.h"
 
-#include <any>
-#include <string>
 
 namespace Elements {
 

@@ -2,9 +2,6 @@
 
 #include "Message.h"
 
-//#include <vector>
-#include <queue>
-
 namespace Elements {
 
     class MessageBus {

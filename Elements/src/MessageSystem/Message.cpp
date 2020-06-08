@@ -1,3 +1,5 @@
+#include "elmtpch.h"
+
 #include "Message.h"
 
 namespace Elements {

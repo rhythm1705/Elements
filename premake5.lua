@@ -21,6 +21,9 @@ project "Elements"
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("int/" .. outputdir .. "/%{prj.name}")
 	
+	pchheader "elmtpch.h"
+	pchsource "Elements/src/elmtpch.cpp"
+	
 	files { 
 		"%{prj.name}/src/**.h", 
 		"%{prj.name}/src/**.cpp" 

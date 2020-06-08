@@ -4,6 +4,12 @@
     <Filter Include="Core">
       <UniqueIdentifier>{2EB4837C-1AEB-840D-C3D7-6A10AFED000F}</UniqueIdentifier>
     </Filter>
+    <Filter Include="InputSystem">
+      <UniqueIdentifier>{FAE1B94B-6697-3241-EF8B-2C185B402945}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MessageSystem">
+      <UniqueIdentifier>{EFE1C1B0-5BA2-3DE7-24DD-8664905C82C3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Core\Application.h">
@@ -15,19 +21,37 @@
     <ClInclude Include="src\Core\Main.h">
       <Filter>Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\Core\System.h">
+      <Filter>Core</Filter>
+    </ClInclude>
     <ClInclude Include="src\Elements.h" />
-    <ClInclude Include="src\MessageSystem\MessageBus.h" />
-    <ClInclude Include="src\MessageSystem\Message.h" />
-    <ClInclude Include="src\Core\System.h" />
-    <ClInclude Include="src\InputSystem\InputSystem.h" />
+    <ClInclude Include="src\InputSystem\InputSystem.h">
+      <Filter>InputSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MessageSystem\Message.h">
+      <Filter>MessageSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MessageSystem\MessageBus.h">
+      <Filter>MessageSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="src\elmtpch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="src\MessageSystem\MessageBus.cpp" />
-    <ClCompile Include="src\MessageSystem\Message.cpp" />
-    <ClCompile Include="src\Core\System.cpp" />
-    <ClCompile Include="src\InputSystem\InputSystem.cpp" />
+    <ClCompile Include="src\Core\System.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\InputSystem\InputSystem.cpp">
+      <Filter>InputSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MessageSystem\Message.cpp">
+      <Filter>MessageSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MessageSystem\MessageBus.cpp">
+      <Filter>MessageSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="src\elmtpch.cpp" />
   </ItemGroup>
 </Project>

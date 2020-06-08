@@ -1,5 +1,6 @@
+#include "elmtpch.h"
+
 #include "InputSystem.h"
-#include <iostream>
 
 namespace Elements {
     void InputSystem::handleMessage() {
