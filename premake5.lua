@@ -75,7 +75,8 @@ project "Playground"
 	
 	includedirs {
 		"Elements/src",
-		"Elements/vendor/spdlog/include"
+		"Elements/vendor/spdlog/include",
+		"Elements/vendor/GLFW/include",
 	}
 	
 	links {

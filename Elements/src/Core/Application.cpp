@@ -5,16 +5,15 @@
 #include "MessageSystem/MessageBus.h"
 #include "InputSystem/InputSystem.h"
 
-#include <stdio.h>
-
 namespace Elements {
 
-    Application::Application() {}
+    Application::Application() {
+        window = std::unique_ptr<Window>(new Window(WindowProps()));
+    }
 
     Application::~Application() {}
 
     void Application::Run() {
-        printf("Hello World\n");
         MessageBus* bus = new MessageBus();
         System* system = new System();
         system->bus = bus;
@@ -25,6 +24,6 @@ namespace Elements {
         input->handleMessage();
         bus->popMessage();
         input->handleMessage();
-        // while (true);
+        while (true);
     }
 } // namespace Elements
