@@ -18,6 +18,9 @@
     <ClInclude Include="src\Core\Application.h">
       <Filter>Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\Core\ApplicationMessage.h">
+      <Filter>Core</Filter>
+    </ClInclude>
     <ClInclude Include="src\Core\Core.h">
       <Filter>Core</Filter>
     </ClInclude>
@@ -57,12 +60,6 @@
     </ClCompile>
     <ClCompile Include="src\InputSystem\InputSystem.cpp">
       <Filter>InputSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="src\InputSystem\KeyInputMessage.cpp">
-      <Filter>InputSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="src\MessageSystem\Message.cpp">
-      <Filter>MessageSystem</Filter>
     </ClCompile>
     <ClCompile Include="src\MessageSystem\MessageBus.cpp">
       <Filter>MessageSystem</Filter>

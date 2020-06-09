@@ -5,8 +5,8 @@
 namespace Elements {
     void InputSystem::handleMessage() {
         Message* msg = bus->getMessage();
-        if (msg->type == MessageType::TextInput) {
-            std::cout << "MESSAGE RECEIVED: " << std::any_cast<std::string>(msg->data) << std::endl;
+        if (msg->getType() == MessageType::TextInput) {
+            std::cout << "MESSAGE RECEIVED: " << std::any_cast<std::string>(msg->getData()) << std::endl;
         }
     }
 }

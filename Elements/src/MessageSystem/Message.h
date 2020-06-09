@@ -14,21 +14,34 @@ namespace Elements {
         TextInput,
 
         // Keyboard Input
-        KeyUp,
         KeyDown,
+        KeyUp,
 
         // Window
-        WindowOpen,
-        WindowClosed,
+        WindowClose, 
+        WindowResize, 
+        WindowFocus, 
+        WindowLostFocus, 
+        WindowMoved,
     };
 
     class Message {
     public:
+        MessageType getType() {
+            return type;
+        }
+        std::any getData() {
+            return data;
+        }
+        Message(System* sender, std::any data) : sender(sender), data(data) {
+            type = MessageType::None;
+        }
+        Message(System* sender, MessageType type, std::any data) : sender(sender), type(type), data(data) {}
+        ~Message();
+
+    protected:
         MessageType type;
         std::any data;
         System* sender;
-        Message(System* sender, std::any data);
-        Message(System* sender, MessageType type, std::any data);
-        ~Message();
     };
 }  // namespace Elements

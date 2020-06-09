@@ -7,9 +7,15 @@ workspace "Elements"
 		"Release"
 	}
 	
-IncludeDir = {}
-	
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
+	
+IncludeDir = {}
+IncludeDir["GLFW"] = "Elements/vendor/GLFW/include"
+
+group "Dependencies"
+	include "Elements/vendor/GLFW"
+
+group ""
 
 project "Elements"
 	location "Elements"
@@ -32,7 +38,12 @@ project "Elements"
 	includedirs {
 		"%{prj.name}/src",
 		"%{prj.name}/vendor/spdlog/include",
+		"%{IncludeDir.GLFW}",
 	}
+	
+	links {
+		"GLFW"
+		}
 	
 	filter "system:windows"
 		systemversion "latest"

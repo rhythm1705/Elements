@@ -1,3 +1,6 @@
 [submodule "Elements/vendor/spdlog"]
 	path = Elements/vendor/spdlog
 	url = https://github.com/gabime/spdlog.git
+[submodule "Elements/vendor/GLFW"]
+	path = Elements/vendor/GLFW
+	url = https://github.com/rhythm1705/glfw.git

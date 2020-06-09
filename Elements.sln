@@ -3,6 +3,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Playground", "Playground\Playground.vcxproj", "{0A67447D-F61E-86CA-5F26-5F264BFD20BB}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dependencies", "Dependencies", "{53E47842-3FC8-3998-A828-34EB942B241A}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GLFW", "Elements\vendor\GLFW\GLFW.vcxproj", "{154B857C-0182-860D-AA6E-6C109684020F}"
+EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Elements", "Elements\Elements.vcxproj", "{22088A96-0ED5-E4A1-37EE-D249231A1A30}"
 EndProject
 Global
@@ -15,6 +19,10 @@ Global
 		{0A67447D-F61E-86CA-5F26-5F264BFD20BB}.Debug|x64.Build.0 = Debug|x64
 		{0A67447D-F61E-86CA-5F26-5F264BFD20BB}.Release|x64.ActiveCfg = Release|x64
 		{0A67447D-F61E-86CA-5F26-5F264BFD20BB}.Release|x64.Build.0 = Release|x64
+		{154B857C-0182-860D-AA6E-6C109684020F}.Debug|x64.ActiveCfg = Debug|x64
+		{154B857C-0182-860D-AA6E-6C109684020F}.Debug|x64.Build.0 = Debug|x64
+		{154B857C-0182-860D-AA6E-6C109684020F}.Release|x64.ActiveCfg = Release|x64
+		{154B857C-0182-860D-AA6E-6C109684020F}.Release|x64.Build.0 = Release|x64
 		{22088A96-0ED5-E4A1-37EE-D249231A1A30}.Debug|x64.ActiveCfg = Debug|x64
 		{22088A96-0ED5-E4A1-37EE-D249231A1A30}.Debug|x64.Build.0 = Debug|x64
 		{22088A96-0ED5-E4A1-37EE-D249231A1A30}.Release|x64.ActiveCfg = Release|x64
@@ -22,5 +30,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{154B857C-0182-860D-AA6E-6C109684020F} = {53E47842-3FC8-3998-A828-34EB942B241A}
 	EndGlobalSection
 EndGlobal

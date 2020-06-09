@@ -5,20 +5,27 @@
 
 namespace Elements {
 
-    class KeyPressedMessage : public Message {
+    class KeyDownMessage : public Message {
     public:
-        KeyPressedMessage(System* sender, std::any data);
-        KeyCode getKeyCode();
-        int getRepeatCount();
-        
-
+        KeyDownMessage(System* sender, std::any data) : Message{ sender, data } {
+            type = MessageType::KeyDown;
+        }
+        KeyCode getKeyCode() {
+            return std::any_cast<std::pair<KeyCode, int>>(data).first;
+        }
+        int getRepeatCount() {
+            return std::any_cast<std::pair<KeyCode, int>>(data).second;
+        };
     };
 
-    class KeyReleasedMessage : public Message {
+    class KeyUpMessage : public Message {
     public:
-        KeyReleasedMessage(System* sender, std::any data);
-        KeyCode getKeyCode();
-
+        KeyUpMessage(System* sender, std::any data) : Message{ sender, data } {
+            type = MessageType::KeyUp;
+        }
+        KeyCode getKeyCode() {
+            return std::any_cast<KeyCode>(data);
+        }
     };
 }
 
