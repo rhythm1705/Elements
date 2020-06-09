@@ -10,6 +10,9 @@
     <Filter Include="MessageSystem">
       <UniqueIdentifier>{EFE1C1B0-5BA2-3DE7-24DD-8664905C82C3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Utilities">
+      <UniqueIdentifier>{010A8043-6D74-34BA-B6B2-E55F225C120F}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Core\Application.h">
@@ -28,11 +31,20 @@
     <ClInclude Include="src\InputSystem\InputSystem.h">
       <Filter>InputSystem</Filter>
     </ClInclude>
+    <ClInclude Include="src\InputSystem\KeyInputMessage.h">
+      <Filter>InputSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="src\InputSystem\Keys.h">
+      <Filter>InputSystem</Filter>
+    </ClInclude>
     <ClInclude Include="src\MessageSystem\Message.h">
       <Filter>MessageSystem</Filter>
     </ClInclude>
     <ClInclude Include="src\MessageSystem\MessageBus.h">
       <Filter>MessageSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Utilities\Log.h">
+      <Filter>Utilities</Filter>
     </ClInclude>
     <ClInclude Include="src\elmtpch.h" />
   </ItemGroup>
@@ -46,11 +58,17 @@
     <ClCompile Include="src\InputSystem\InputSystem.cpp">
       <Filter>InputSystem</Filter>
     </ClCompile>
+    <ClCompile Include="src\InputSystem\KeyInputMessage.cpp">
+      <Filter>InputSystem</Filter>
+    </ClCompile>
     <ClCompile Include="src\MessageSystem\Message.cpp">
       <Filter>MessageSystem</Filter>
     </ClCompile>
     <ClCompile Include="src\MessageSystem\MessageBus.cpp">
       <Filter>MessageSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Utilities\Log.cpp">
+      <Filter>Utilities</Filter>
     </ClCompile>
     <ClCompile Include="src\elmtpch.cpp" />
   </ItemGroup>

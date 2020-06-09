@@ -30,7 +30,8 @@ project "Elements"
 	}
 	
 	includedirs {
-		"%{prj.name}/src"
+		"%{prj.name}/src",
+		"%{prj.name}/vendor/spdlog/include",
 	}
 	
 	filter "system:windows"
@@ -62,7 +63,8 @@ project "Playground"
 	}
 	
 	includedirs {
-		"Elements/src"
+		"Elements/src",
+		"Elements/vendor/spdlog/include"
 	}
 	
 	links {

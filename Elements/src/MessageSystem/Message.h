@@ -22,10 +22,12 @@ namespace Elements {
         WindowClosed,
     };
 
-    struct Message {
+    class Message {
+    public:
         MessageType type;
         std::any data;
         System* sender;
+        Message(System* sender, std::any data);
         Message(System* sender, MessageType type, std::any data);
         ~Message();
     };

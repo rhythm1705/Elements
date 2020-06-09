@@ -58,7 +58,7 @@
       <PrecompiledHeaderFile>elmtpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>ELMT_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -75,7 +75,7 @@
       <PrecompiledHeaderFile>elmtpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>ELMT_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -97,16 +97,21 @@
     <ClInclude Include="src\Core\System.h" />
     <ClInclude Include="src\Elements.h" />
     <ClInclude Include="src\InputSystem\InputSystem.h" />
+    <ClInclude Include="src\InputSystem\KeyInputMessage.h" />
+    <ClInclude Include="src\InputSystem\Keys.h" />
     <ClInclude Include="src\MessageSystem\Message.h" />
     <ClInclude Include="src\MessageSystem\MessageBus.h" />
+    <ClInclude Include="src\Utilities\Log.h" />
     <ClInclude Include="src\elmtpch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application.cpp" />
     <ClCompile Include="src\Core\System.cpp" />
     <ClCompile Include="src\InputSystem\InputSystem.cpp" />
+    <ClCompile Include="src\InputSystem\KeyInputMessage.cpp" />
     <ClCompile Include="src\MessageSystem\Message.cpp" />
     <ClCompile Include="src\MessageSystem\MessageBus.cpp" />
+    <ClCompile Include="src\Utilities\Log.cpp" />
     <ClCompile Include="src\elmtpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>

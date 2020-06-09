@@ -14,12 +14,16 @@ namespace Elements {
     Application::~Application() {}
 
     void Application::Run() {
-        printf("Hello World");
+        printf("Hello World\n");
         MessageBus* bus = new MessageBus();
         System* system = new System();
         system->bus = bus;
-        system->sendMessage(MessageType::TextInput, NULL);
+        std::string out = "HELLO WORLD!";
+        system->sendMessage(MessageType::TextInput, out);
+        system->sendMessage(MessageType::TextInput, std::string("100"));
         InputSystem* input = new InputSystem();
+        input->handleMessage();
+        bus->popMessage();
         input->handleMessage();
         // while (true);
     }

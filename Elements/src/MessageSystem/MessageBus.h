@@ -4,6 +4,7 @@
 
 namespace Elements {
 
+    // A better way might be to use a linked list to prevent resizing of queue.
     class MessageBus {
 
     public:
