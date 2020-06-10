@@ -4,10 +4,9 @@
 
 namespace Elements {
 
-    class InputSystem : System {
-    public:
-        void handleMessage();
-    };
+class InputSystem : System {
+ public:
+  void handleMessage();
+};
 
-} // namespace Elements
-
+}  // namespace Elements

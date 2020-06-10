@@ -1,14 +1,12 @@
 #include <Elements.h>
 
 class Playground : public Elements::Application {
+ public:
+  Playground() {}
 
-public:
-    Playground() {}
-
-    ~Playground() {}
-
+  ~Playground() {}
 };
 
 Elements::Application* Elements::CreateApplication() {
-    return new Playground();
+  return new Playground();
 }

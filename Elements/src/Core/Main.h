@@ -7,11 +7,11 @@
 extern Elements::Application* Elements::CreateApplication();
 
 int main() {
-    Elements::Log::init();
-    ELMT_CORE_INFO("Welcome to Elements!");
-    auto app = Elements::CreateApplication();
-    app->run();
-    delete app;
+  Elements::Log::init();
+  ELMT_CORE_INFO("Welcome to Elements!");
+  auto app = Elements::CreateApplication();
+  app->run();
+  delete app;
 }
 
 #endif

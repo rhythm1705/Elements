@@ -41,6 +41,8 @@ project "Elements"
 		"%{IncludeDir.GLFW}",
 	}
 	
+	forceincludes { "elmtpch.h" }
+		
 	links {
 		"GLFW"
 		}

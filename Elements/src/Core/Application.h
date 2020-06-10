@@ -7,25 +7,23 @@
 
 namespace Elements {
 
-    class  Application : System {
+class Application : System {
+ public:
+  Application();
+  virtual ~Application();
 
-    public:
-        Application();
-        virtual ~Application();
+  void run();
+  void close();
+  void handleMessage();
+  void onWindowClose();
+  void onWindowResize(WindowResizeMessage* msg);
 
-        void run();
-        void close();
-        void handleMessage();
-        void onWindowClose();
-        void onWindowResize(WindowResizeMessage* msg);
+ private:
+  std::unique_ptr<WindowSystem> window;
+  bool running = true;
+  bool minimized = false;
+};
 
-    private:
-        std::unique_ptr<WindowSystem> window;
-        bool running = true;
-        bool minimized = false;
+Application* CreateApplication();
 
-    };
-
-    Application* CreateApplication();
-
-} // namespace Elements
+}  // namespace Elements
