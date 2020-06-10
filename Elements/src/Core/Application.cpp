@@ -8,22 +8,45 @@
 namespace Elements {
 
     Application::Application() {
-        window = std::unique_ptr<Window>(new Window(WindowProps()));
+        bus = new MessageBus();
+        window = std::unique_ptr<WindowSystem>(new WindowSystem(WindowProps()));
     }
 
     Application::~Application() {}
 
-    void Application::Run() {
-        MessageBus* bus = new MessageBus();
-        System* system = new System();
-        system->bus = bus;
-        std::string out = "HELLO WORLD!";
-        system->sendMessage(MessageType::TextInput, out);
-        system->sendMessage(MessageType::TextInput, std::string("100"));
-        InputSystem* input = new InputSystem();
-        input->handleMessage();
-        bus->popMessage();
-        input->handleMessage();
-        while (true);
+    void Application::run() {
+        while (running) {
+            if (!bus->isEmpty()) {
+                ELMT_CORE_INFO("Dispatching Message.");
+                handleMessage();
+                bus->popMessage();
+            }
+            window->onUpdate();
+        }
+    }
+    void Application::close() {
+        running = false;
+    }
+    void Application::handleMessage() {
+        ELMT_CORE_INFO("Received Message.");
+        Message* msg = bus->getMessage();
+        if (msg->getType() == MessageType::WindowClose) {
+            Application::onWindowClose();
+        }
+        else if (msg->getType() == MessageType::WindowResize) {
+            ELMT_CORE_INFO("Resizing Window");
+            WindowResizeMessage* rszMsg = (WindowResizeMessage*) msg;
+            Application::onWindowResize(rszMsg);
+        }
+    }
+    void Application::onWindowClose() {
+        running = false;
+    }
+    void Application::onWindowResize(WindowResizeMessage* msg) {
+        if (msg->getWidth() == 0 || msg->getHeight() == 0) {
+            minimized = true;
+        }
+
+        minimized = false;
     }
 } // namespace Elements

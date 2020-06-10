@@ -9,7 +9,7 @@ namespace Elements {
     public:
         static MessageBus* bus;
         virtual void handleMessage();
-        void sendMessage(MessageType type, std::any data);
+        void postMessage(MessageType type, std::any data);
         System();
         ~System();
     };

@@ -10,9 +10,10 @@ namespace Elements {
     public:
         //std::vector<System> systems;
         std::queue<Message*> messageQueue;
-        void postMessage(Message* msg);
+        void addMessage(Message* msg);
         Message* getMessage();
         void popMessage();
+        bool isEmpty();
         MessageBus();
         ~MessageBus();
     };

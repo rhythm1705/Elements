@@ -1,20 +1,28 @@
 #pragma once
 
 #include "Core.h"
+#include "System.h"
 #include "Window.h"
+#include "WindowMessage.h"
 
 namespace Elements {
 
-    class  Application {
+    class  Application : System {
 
     public:
         Application();
         virtual ~Application();
 
-        void Run();
+        void run();
+        void close();
+        void handleMessage();
+        void onWindowClose();
+        void onWindowResize(WindowResizeMessage* msg);
 
     private:
-        std::unique_ptr<Window> window;
+        std::unique_ptr<WindowSystem> window;
+        bool running = true;
+        bool minimized = false;
 
     };
 

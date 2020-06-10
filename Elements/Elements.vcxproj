@@ -92,7 +92,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Core\Application.h" />
-    <ClInclude Include="src\Core\ApplicationMessage.h" />
+    <ClInclude Include="src\Core\WindowMessage.h" />
     <ClInclude Include="src\Core\Core.h" />
     <ClInclude Include="src\Core\Main.h" />
     <ClInclude Include="src\Core\System.h" />

@@ -18,9 +18,6 @@
     <ClInclude Include="src\Core\Application.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\ApplicationMessage.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="src\Core\Core.h">
       <Filter>Core</Filter>
     </ClInclude>
@@ -53,6 +50,9 @@
       <Filter>Utilities</Filter>
     </ClInclude>
     <ClInclude Include="src\elmtpch.h" />
+    <ClInclude Include="src\Core\WindowMessage.h">
+      <Filter>Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application.cpp">

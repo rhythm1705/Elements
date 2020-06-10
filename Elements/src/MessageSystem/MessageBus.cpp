@@ -4,7 +4,7 @@
 
 namespace Elements {
 
-    void MessageBus::postMessage(Message* msg) {
+    void MessageBus::addMessage(Message* msg) {
         messageQueue.push(msg);
     }
 
@@ -13,7 +13,12 @@ namespace Elements {
     }
 
     void MessageBus::popMessage() {
+        delete messageQueue.front();
         messageQueue.pop();
+    }
+
+    bool MessageBus::isEmpty() {
+        return messageQueue.empty();
     }
 
     MessageBus::MessageBus() {

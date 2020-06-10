@@ -9,9 +9,9 @@ namespace Elements {
     void System::handleMessage() {
     }
 
-    void System::sendMessage(MessageType type, std::any data) {
+    void System::postMessage(MessageType type, std::any data) {
         Message* msg = new Message(this, type, data);
-        bus->postMessage(msg);
+        bus->addMessage(msg);
     }
 
     System::System() {

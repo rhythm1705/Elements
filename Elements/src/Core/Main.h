@@ -10,7 +10,7 @@ int main() {
     Elements::Log::init();
     ELMT_CORE_INFO("Welcome to Elements!");
     auto app = Elements::CreateApplication();
-    app->Run();
+    app->run();
     delete app;
 }
 

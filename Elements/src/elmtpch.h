@@ -15,6 +15,9 @@
 #include <unordered_map>
 #include <unordered_set>
 
+#include "Core/Core.h"
+#include "Utilities/Log.h"
+
 #ifdef ELMT_PLATFORM_WINDOWS
 #   include <Windows.h>
 #endif

@@ -10,10 +10,10 @@ namespace Elements {
             type = MessageType::WindowResize;
         }
         unsigned int getHeight() {
-            return std::any_cast<std::pair<unsigned int, unsigned int>>(data).first;
+            return std::any_cast<std::pair<unsigned int, unsigned int>>(data).second;
         }
         unsigned int getWidth() {
-            return std::any_cast<std::pair<unsigned int, unsigned int>>(data).second;
+            return std::any_cast<std::pair<unsigned int, unsigned int>>(data).first;
         };
     };
 
