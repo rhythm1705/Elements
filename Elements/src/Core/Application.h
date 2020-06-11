@@ -2,8 +2,8 @@
 
 #include "Core.h"
 #include "System.h"
-#include "Window.h"
-#include "WindowMessage.h"
+#include "WindowSystem/Window.h"
+#include "WindowSystem/WindowMessage.h"
 
 namespace Elements {
 

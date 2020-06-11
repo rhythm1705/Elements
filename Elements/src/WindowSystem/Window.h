@@ -2,8 +2,8 @@
 
 #include <GLFW/glfw3.h>
 
-#include "System.h"
-#include "WindowMessage.h"
+#include "Core/System.h"
+#include "WindowSystem/WindowMessage.h"
 #include "elmtpch.h"
 
 namespace Elements {
