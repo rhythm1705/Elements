@@ -6,7 +6,7 @@ namespace Elements {
 
 class WindowResizeMessage : public Message {
  public:
-  WindowResizeMessage(System* sender, std::any data) : Message{sender, data} {
+  WindowResizeMessage(std::any data) : Message{data} {
     type = MessageType::WindowResize;
   }
   unsigned int getHeight() {
@@ -19,7 +19,7 @@ class WindowResizeMessage : public Message {
 
 class WindowCloseMessage : public Message {
  public:
-  WindowCloseMessage(System* sender, std::any data) : Message{sender, NULL} {
+  WindowCloseMessage(std::any data) : Message{NULL} {
     type = MessageType::WindowClose;
   }
 };

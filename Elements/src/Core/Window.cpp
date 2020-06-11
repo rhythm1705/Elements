@@ -60,13 +60,13 @@ void WindowSystem::init(const WindowProps& props) {
         data.width = width;
         data.height = height;
         WindowResizeMessage* msg = new WindowResizeMessage(
-            NULL, std::pair<unsigned int, unsigned int>(width, height));
+            std::pair<unsigned int, unsigned int>(width, height));
         data.windowMessage(msg);
       });
 
   glfwSetWindowCloseCallback(window, [](GLFWwindow* window) {
     WindowProps& data = *(WindowProps*)glfwGetWindowUserPointer(window);
-    WindowCloseMessage* msg = new WindowCloseMessage(NULL, NULL);
+    WindowCloseMessage* msg = new WindowCloseMessage(NULL);
     data.windowMessage(msg);
   });
 
@@ -77,18 +77,18 @@ void WindowSystem::init(const WindowProps& props) {
     switch (action) {
       case GLFW_PRESS: {
         KeyDownMessage* msg = new KeyDownMessage(
-            NULL, std::pair<KeyCode, int>(static_cast<KeyCode>(key), 0));
+            std::pair<KeyCode, int>(static_cast<KeyCode>(key), 0));
         data.windowMessage(msg);
         break;
       }
       case GLFW_RELEASE: {
-        KeyUpMessage* msg = new KeyUpMessage(NULL, static_cast<KeyCode>(key));
+        KeyUpMessage* msg = new KeyUpMessage(static_cast<KeyCode>(key));
         data.windowMessage(msg);
         break;
       }
       case GLFW_REPEAT: {
         KeyDownMessage* msg = new KeyDownMessage(
-            NULL, std::pair<KeyCode, int>(static_cast<KeyCode>(key), 1));
+            std::pair<KeyCode, int>(static_cast<KeyCode>(key), 1));
         data.windowMessage(msg);
         break;
       }

@@ -7,7 +7,7 @@ MessageBus* System::bus;
 void System::handleMessage() {}
 
 void System::postMessage(MessageType type, std::any data) {
-  Message* msg = new Message(this, type, data);
+  Message* msg = new Message(type, data);
   bus->addMessage(msg);
 }
 

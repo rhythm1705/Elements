@@ -7,9 +7,7 @@ namespace Elements {
 
 class KeyDownMessage : public Message {
  public:
-  KeyDownMessage(System* sender, std::any data) : Message{sender, data} {
-    type = MessageType::KeyDown;
-  }
+  KeyDownMessage(std::any data) : Message{data} { type = MessageType::KeyDown; }
   KeyCode getKeyCode() {
     return std::any_cast<std::pair<KeyCode, int>>(data).first;
   }
@@ -20,9 +18,13 @@ class KeyDownMessage : public Message {
 
 class KeyUpMessage : public Message {
  public:
-  KeyUpMessage(System* sender, std::any data) : Message{sender, data} {
-    type = MessageType::KeyUp;
-  }
+  KeyUpMessage(std::any data) : Message{data} { type = MessageType::KeyUp; }
+  KeyCode getKeyCode() { return std::any_cast<KeyCode>(data); }
+};
+
+class KeyTypeMessage : public Message {
+ public:
+  KeyTypeMessage(std::any data) : Message{data} { type = MessageType::KeyType; }
   KeyCode getKeyCode() { return std::any_cast<KeyCode>(data); }
 };
 }  // namespace Elements
