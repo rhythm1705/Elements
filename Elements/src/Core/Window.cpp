@@ -1,5 +1,6 @@
 #include "Window.h"
 
+#include "InputSystem/KeyInputMessage.h"
 #include "WindowMessage.h"
 
 namespace Elements {
@@ -16,15 +17,15 @@ unsigned int Elements::WindowSystem::getHeight() { return 0; }
 
 unsigned int Elements::WindowSystem::getWidth() { return 0; }
 
-void WindowSystem::postWindowResizeMessage(WindowResizeMessage* msg) {
-  Message* winRszMsg = msg;
-  bus->addMessage(winRszMsg);
+void WindowSystem::postMessage(Message* msg) {
+  // Message* winRszMsg = msg;
+  bus->addMessage(msg);
 }
 
-void WindowSystem::postWindowCloseMessage(WindowCloseMessage* msg) {
-  Message* winClsMsg = msg;
-  bus->addMessage(winClsMsg);
-}
+// void WindowSystem::postWindowCloseMessage(WindowCloseMessage* msg) {
+//  Message* winClsMsg = msg;
+//  bus->addMessage(winClsMsg);
+//}
 
 void WindowSystem::init(const WindowProps& props) {
   data.title = props.title;
@@ -32,10 +33,9 @@ void WindowSystem::init(const WindowProps& props) {
   data.height = props.height;
 
   // Assign functions into data to be used inside lambda callbacks for GLFW.
-  data.closeWindow = std::bind(&WindowSystem::postWindowCloseMessage, this,
-                               std::placeholders::_1);
-  data.resizeWindow = std::bind(&WindowSystem::postWindowResizeMessage, this,
-                                std::placeholders::_1);
+
+  data.windowMessage =
+      std::bind(&WindowSystem::postMessage, this, std::placeholders::_1);
 
   ELMT_CORE_INFO("Creating window {0} ({1}, {2})", props.title, props.width,
                  props.height);
@@ -61,13 +61,38 @@ void WindowSystem::init(const WindowProps& props) {
         data.height = height;
         WindowResizeMessage* msg = new WindowResizeMessage(
             NULL, std::pair<unsigned int, unsigned int>(width, height));
-        data.resizeWindow(msg);
+        data.windowMessage(msg);
       });
 
   glfwSetWindowCloseCallback(window, [](GLFWwindow* window) {
     WindowProps& data = *(WindowProps*)glfwGetWindowUserPointer(window);
     WindowCloseMessage* msg = new WindowCloseMessage(NULL, NULL);
-    data.closeWindow(msg);
+    data.windowMessage(msg);
+  });
+
+  glfwSetKeyCallback(window, [](GLFWwindow* window, int key, int scancode,
+                                int action, int mods) {
+    WindowProps& data = *(WindowProps*)glfwGetWindowUserPointer(window);
+
+    switch (action) {
+      case GLFW_PRESS: {
+        KeyDownMessage* msg = new KeyDownMessage(
+            NULL, std::pair<KeyCode, int>(static_cast<KeyCode>(key), 0));
+        data.windowMessage(msg);
+        break;
+      }
+      case GLFW_RELEASE: {
+        KeyUpMessage* msg = new KeyUpMessage(NULL, static_cast<KeyCode>(key));
+        data.windowMessage(msg);
+        break;
+      }
+      case GLFW_REPEAT: {
+        KeyDownMessage* msg = new KeyDownMessage(
+            NULL, std::pair<KeyCode, int>(static_cast<KeyCode>(key), 1));
+        data.windowMessage(msg);
+        break;
+      }
+    }
   });
 }
 

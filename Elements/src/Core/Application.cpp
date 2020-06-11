@@ -2,6 +2,7 @@
 
 #include "InputSystem/InputSystem.h"
 #include "MessageSystem/MessageBus.h"
+#include "InputSystem/KeyInputMessage.h"
 
 namespace Elements {
 
@@ -21,7 +22,9 @@ void Application::run() {
     window->onUpdate();
   }
 }
+
 void Application::close() { running = false; }
+
 void Application::handleMessage() {
   Message* msg = bus->getMessage();
   if (msg->getType() == MessageType::WindowClose) {
@@ -31,9 +34,13 @@ void Application::handleMessage() {
     ELMT_CORE_INFO("Resizing Window");
     WindowResizeMessage* rszMsg = (WindowResizeMessage*)msg;
     Application::onWindowResize(rszMsg);
+  } else if (msg->getType() == MessageType::KeyDown) {
+    ELMT_CORE_INFO("{0}", ((KeyDownMessage*)msg)->getKeyCode());
   }
 }
+
 void Application::onWindowClose() { running = false; }
+
 void Application::onWindowResize(WindowResizeMessage* msg) {
   if (msg->getWidth() == 0 || msg->getHeight() == 0) {
     minimized = true;
