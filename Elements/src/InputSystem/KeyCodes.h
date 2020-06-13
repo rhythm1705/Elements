@@ -154,7 +154,7 @@ enum class KeyCode {
 #define ELMT_KEY_7 ::Elements::Key::D7
 #define ELMT_KEY_8 ::Elements::Key::D8
 #define ELMT_KEY_9 ::Elements::Key::D9
-#define ELMT_KEY_SEMICOLON ::Elements::Key::Semicolon /* ; */
+#define ELMT_KEY_SEMICOLon ::Elements::Key::Semicolon /* ; */
 #define ELMT_KEY_EQUAL ::Elements::Key::Equal         /* = */
 #define ELMT_KEY_A ::Elements::Key::A
 #define ELMT_KEY_B ::Elements::Key::B
@@ -255,11 +255,11 @@ enum class KeyCode {
 #define ELMT_KEY_KP_EQUAL ::Elements::Key::KPEqual
 
 #define ELMT_KEY_LEFT_SHIFT ::Elements::Key::LeftShift
-#define ELMT_KEY_LEFT_CONTROL ::Elements::Key::LeftControl
+#define ELMT_KEY_LEFT_ConTROL ::Elements::Key::LeftControl
 #define ELMT_KEY_LEFT_ALT ::Elements::Key::LeftAlt
 #define ELMT_KEY_LEFT_SUPER ::Elements::Key::LeftSuper
 #define ELMT_KEY_RIGHT_SHIFT ::Elements::Key::RightShift
-#define ELMT_KEY_RIGHT_CONTROL ::Elements::Key::RightControl
+#define ELMT_KEY_RIGHT_ConTROL ::Elements::Key::RightControl
 #define ELMT_KEY_RIGHT_ALT ::Elements::Key::RightAlt
 #define ELMT_KEY_RIGHT_SUPER ::Elements::Key::RightSuper
 #define ELMT_KEY_MENU ::Elements::Key::Menu

@@ -1,8 +1,10 @@
 #include <Elements.h>
 
+#include "ExampleLayer.h"
+
 class Playground : public Elements::Application {
  public:
-  Playground() {}
+  Playground() { pushLayer(new ExampleLayer()); }
 
   ~Playground() {}
 };

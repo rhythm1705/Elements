@@ -12,9 +12,9 @@
 #endif
 #elif defined(__APPLE__) || defined(__MACH__)
 #include <TargetConditionals.h>
-#if TARGET_IPHONE_SIMULATOR == 1
+#if TARGET_IPHonE_SIMULATOR == 1
 #error "IOS simulator is not supported!"
-#elif TARGET_OS_IPHONE == 1
+#elif TARGET_OS_IPHonE == 1
 #define ELMT_PLATFORM_IOS
 #error "IOS is not supported!"
 #elif TARGET_OS_MAC == 1

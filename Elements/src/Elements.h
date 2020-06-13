@@ -2,6 +2,7 @@
 
 #include "Core/Application.h"
 #include "Core/Core.h"
+#include "Core/Layer.h"
 #include "Core/System.h"
 #include "Utilities/Log.h"
 
