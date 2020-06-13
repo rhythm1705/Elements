@@ -11,6 +11,8 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 	
 IncludeDir = {}
 IncludeDir["GLFW"] = "Elements/vendor/GLFW/include"
+IncludeDir["Vulkan"] = path.getrelative(".", "C:/VulkanSdk/1.2.141.2")
+IncludeDir["GLM"] = "Elements/vendor/GLM/"
 
 group "Dependencies"
 	include "Elements/vendor/GLFW"
@@ -32,19 +34,28 @@ project "Elements"
 	
 	files { 
 		"%{prj.name}/src/**.h", 
-		"%{prj.name}/src/**.cpp" 
+		"%{prj.name}/src/**.cpp",
+		"%{prj.name}/vendor/glm/glm/**.hpp",
+		"%{prj.name}/vendor/glm/glm/**.inl"
+	}
+	
+	libdirs {
+		"%{IncludeDir.Vulkan}/Lib"
 	}
 	
 	includedirs {
 		"%{prj.name}/src",
 		"%{prj.name}/vendor/spdlog/include",
 		"%{IncludeDir.GLFW}",
+		"%{IncludeDir.Vulkan}/Include",
+		"%{IncludeDir.GLM}"
 	}
 	
 	forceincludes { "elmtpch.h" }
 		
 	links {
-		"GLFW"
+		"GLFW",
+		"vulkan-1.lib"
 		}
 	
 	filter "system:windows"
@@ -78,7 +89,9 @@ project "Playground"
 	includedirs {
 		"Elements/src",
 		"Elements/vendor/spdlog/include",
-		"Elements/vendor/GLFW/include",
+		"%{IncludeDir.GLFW}",
+		"%{IncludeDir.Vulkan}/Include",
+		"%{IncludeDir.GLM}"
 	}
 	
 	links {
