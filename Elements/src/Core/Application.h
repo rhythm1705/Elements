@@ -1,27 +1,27 @@
 #pragma once
 
 #include "Core.h"
+#include "InputSystem/InputSystem.h"
+#include "InputSystem/KeyInputMessage.h"
 #include "System.h"
 #include "WindowSystem/Window.h"
 #include "WindowSystem/WindowMessage.h"
 
 namespace Elements {
 
-class Application : System {
+class Application {
  public:
   Application();
   virtual ~Application();
 
-  void run();
-  void close();
-  void handleMessage();
-  void onWindowClose();
-  void onWindowResize(WindowResizeMessage* msg);
+  void run(MessageBus* bus);
+  WindowSystem& getWindow() { return *window; }
+  static Application& get() { return *instance; }
 
  private:
+  static Application* instance;
   std::unique_ptr<WindowSystem> window;
-  bool running = true;
-  bool minimized = false;
+  std::unique_ptr<InputSystem> input;
 };
 
 Application* CreateApplication();

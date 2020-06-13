@@ -18,15 +18,35 @@ unsigned int Elements::WindowSystem::getHeight() { return 0; }
 
 unsigned int Elements::WindowSystem::getWidth() { return 0; }
 
-void WindowSystem::postMessage(Message* msg) { bus->addMessage(msg); }
+void WindowSystem::postMessage(Message* msg) { getBus()->addMessage(msg); }
+
+void WindowSystem::handleMessage(Message* msg) {
+  if (msg->getType() == MessageType::WindowClose) {
+    ELMT_CORE_INFO("Closing Window");
+    WindowSystem::onClose();
+  } else if (msg->getType() == MessageType::WindowResize) {
+    //ELMT_CORE_INFO("Resizing Window");
+    WindowResizeMessage* rszMsg = (WindowResizeMessage*)msg;
+    WindowSystem::onResize(rszMsg);
+  }
+}
+
+void WindowSystem::onClose() { running = false; }
+
+void WindowSystem::onResize(WindowResizeMessage* msg) {
+  if (msg->getWidth() == 0 || msg->getHeight() == 0) {
+    minimized = true;
+  }
+  minimized = false;
+}
 
 void WindowSystem::init(const WindowProps& props) {
   data.title = props.title;
   data.width = props.width;
   data.height = props.height;
 
-  // Assign functions into data to be used inside lambda callbacks for GLFW.
-
+  // Assign message posting function into data to be used inside lambda
+  // callbacks for GLFW.
   data.windowMessage =
       std::bind(&WindowSystem::postMessage, this, std::placeholders::_1);
 
