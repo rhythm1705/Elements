@@ -4,3 +4,6 @@
 [submodule "Elements/vendor/GLFW"]
 	path = Elements/vendor/GLFW
 	url = https://github.com/rhythm1705/glfw.git
+[submodule "Elements/vendor/GLM"]
+	path = Elements/vendor/GLFW
+	url = https://github.com/g-truc/glm.git
