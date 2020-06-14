@@ -1,3 +1,5 @@
+/* Header file to be included by Elements applications. */
+
 #pragma once
 
 #include "Core/Application.h"

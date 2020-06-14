@@ -1,3 +1,5 @@
+/* Enum class for Mouse input codes and macros defined for them. */
+
 #pragma once
 namespace Elements {
 enum class MouseCode {

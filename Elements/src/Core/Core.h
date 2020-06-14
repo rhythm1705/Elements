@@ -1,3 +1,5 @@
+/* Used to detect platform and other utilities. */
+
 #pragma once
 
 // Platform detection using predefined macros

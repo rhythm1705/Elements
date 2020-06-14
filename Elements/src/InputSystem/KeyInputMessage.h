@@ -1,3 +1,5 @@
+/* Classes for Keyboard input messages. */
+
 #pragma once
 
 #include "InputSystem/KeyCodes.h"

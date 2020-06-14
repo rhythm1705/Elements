@@ -1,3 +1,5 @@
+/* Precompiled headers for faster compile times. */
+
 #pragma once
 
 #include <algorithm>

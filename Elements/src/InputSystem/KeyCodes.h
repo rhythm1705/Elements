@@ -1,3 +1,5 @@
+/* Enum class for Keyboard input codes and macros defined for them. */
+
 #pragma once
 
 namespace Elements {

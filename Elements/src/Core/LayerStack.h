@@ -1,3 +1,5 @@
+/* Class to define a stack of layers that constitute an application. */
+
 #pragma once
 
 #include "Layer.h"

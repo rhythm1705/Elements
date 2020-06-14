@@ -1,3 +1,5 @@
+/* Class to separate different levels of surface in an application. */
+
 #pragma once
 
 #include "MessageSystem/Message.h"

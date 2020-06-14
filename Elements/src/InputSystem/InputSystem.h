@@ -1,3 +1,5 @@
+/* Engine system for handling user input. */
+
 #pragma once
 
 #include "Core/System.h"

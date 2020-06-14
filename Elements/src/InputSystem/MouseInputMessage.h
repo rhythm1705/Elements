@@ -1,3 +1,5 @@
+/* Classes for Mouse input messages. */
+
 #pragma once
 
 #include "InputSystem/MouseCodes.h"

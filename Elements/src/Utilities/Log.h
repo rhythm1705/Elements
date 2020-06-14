@@ -1,3 +1,5 @@
+/* Logging system using spdlog with macros defined. */
+
 #pragma once
 
 #include "elmtpch.h"

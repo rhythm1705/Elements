@@ -1,3 +1,5 @@
+/* An interface for different engine systems. */
+
 #pragma once
 
 #include "MessageSystem/Message.h"
@@ -9,6 +11,7 @@ class System {
  public:
   System();
   ~System();
+
   void createBus();
   MessageBus* getBus() { return bus; }
   void deleteBus();

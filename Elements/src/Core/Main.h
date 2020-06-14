@@ -1,3 +1,5 @@
+/* The entrypoint of the engine. */
+
 #pragma once
 
 #include "Core.h"

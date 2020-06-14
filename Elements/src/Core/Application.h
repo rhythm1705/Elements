@@ -1,3 +1,5 @@
+/* The main class that boots up the systems and runs the engine. */
+
 #pragma once
 
 #include "Core.h"

@@ -1,3 +1,6 @@
+/* Class for creating message objects used to communicate between engine
+ * systems. */
+
 #pragma once
 
 #include "elmtpch.h"
