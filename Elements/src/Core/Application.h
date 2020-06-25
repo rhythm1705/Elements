@@ -13,24 +13,24 @@
 namespace Elements {
 
 class Application {
- public:
-  Application();
-  virtual ~Application();
+  public:
+    Application();
+    virtual ~Application();
 
-  void pushLayer(Layer* layer);
-  void pushOverlay(Layer* layer);
+    void pushLayer(Layer *layer);
+    void pushOverlay(Layer *layer);
 
-  void run(MessageBus* bus);
-  WindowSystem& getWindow() { return *window; }
-  static Application& get() { return *instance; }
+    void run(MessageBus *bus);
+    WindowSystem &getWindow() { return *window; }
+    static Application &get() { return *instance; }
 
- private:
-  static Application* instance;
-  LayerStack layerStack;
-  std::unique_ptr<WindowSystem> window;
-  std::unique_ptr<InputSystem> input;
+  private:
+    static Application *instance;
+    LayerStack layerStack;
+    std::unique_ptr<WindowSystem> window;
+    std::unique_ptr<InputSystem> input;
 };
 
-Application* CreateApplication();
+Application *CreateApplication();
 
-}  // namespace Elements
+} // namespace Elements

@@ -10,48 +10,48 @@ namespace Elements {
 class System;
 
 enum class MessageType {
-  None = 0,
+    None = 0,
 
-  // Keyboard Input
-  KeyDown,
-  KeyUp,
-  KeyType,
+    // Keyboard Input
+    KeyDown,
+    KeyUp,
+    KeyType,
 
-  // Mouse Input
-  MouseMove,
-  MouseScroll,
-  MouseButtonDown,
-  MouseButtonUp,
+    // Mouse Input
+    MouseMove,
+    MouseScroll,
+    MouseButtonDown,
+    MouseButtonUp,
 
-  // Window
-  WindowClose,
-  WindowResize,
-  WindowFocus,
-  WindowLostFocus,
-  WindowMove,
+    // Window
+    WindowClose,
+    WindowResize,
+    WindowFocus,
+    WindowLostFocus,
+    WindowMove,
 };
 
 class Message {
- public:
-  Message(std::any data) : data(data) { type = MessageType::None; }
-  Message(MessageType type, std::any data) : type(type), data(data) {}
-  ~Message() {}
+  public:
+    Message(std::any data) : data(data) { type = MessageType::None; }
+    Message(MessageType type, std::any data) : type(type), data(data) {}
+    ~Message() {}
 
-  MessageType getType() { return type; }
-  std::any getData() { return data; }
+    MessageType getType() { return type; }
+    std::any getData() { return data; }
 
-  std::string toString() {
-    std::stringstream dataContents;
-    dataContents << data.type().name();
-    return dataContents.str();
-  }
+    std::string toString() {
+        std::stringstream dataContents;
+        dataContents << data.type().name();
+        return dataContents.str();
+    }
 
-  bool isHandled() { return handled; }
-  void markHandled() { handled = true; }
+    bool isHandled() { return handled; }
+    void markHandled() { handled = true; }
 
- protected:
-  MessageType type;
-  std::any data;
-  bool handled = false;
+  protected:
+    MessageType type;
+    std::any data;
+    bool handled = false;
 };
-}  // namespace Elements
+} // namespace Elements

@@ -7,17 +7,17 @@
 
 #ifdef ELMT_PLATFORM_WINDOWS
 
-extern Elements::Application* Elements::CreateApplication();
+extern Elements::Application *Elements::CreateApplication();
 
 int main() {
-  Elements::Log::init();
-  ELMT_CORE_INFO("Welcome to Elements!");
-  Elements::System system;
-  system.createBus();
-  auto app = Elements::CreateApplication();
-  app->run(system.getBus());
-  delete app;
-  system.deleteBus();
+    Elements::Log::init();
+    ELMT_CORE_INFO("Welcome to Elements!");
+    Elements::System system;
+    system.createBus();
+    auto app = Elements::CreateApplication();
+    app->run(system.getBus());
+    delete app;
+    system.deleteBus();
 }
 
 #endif

@@ -8,19 +8,19 @@
 namespace Elements {
 
 class System {
- public:
-  System();
-  ~System();
+  public:
+    System();
+    ~System();
 
-  void createBus();
-  MessageBus* getBus() { return bus; }
-  void deleteBus();
+    void createBus();
+    MessageBus *getBus() { return bus; }
+    void deleteBus();
 
-  virtual void handleMessage();
-  void postMessage(MessageType type, std::any data);
+    virtual void handleMessage();
+    void postMessage(MessageType type, std::any data);
 
- private:
-  static MessageBus* bus;
+  private:
+    static MessageBus *bus;
 };
 
-}  // namespace Elements
+} // namespace Elements

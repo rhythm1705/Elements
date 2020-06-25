@@ -2,6 +2,9 @@
 
 #pragma once
 
+#include "Core/Core.h"
+#include "Utilities/Log.h"
+
 #include <algorithm>
 #include <any>
 #include <array>
@@ -16,9 +19,6 @@
 #include <utility>
 #include <vector>
 
-#include "Core/Core.h"
-#include "Utilities/Log.h"
-
 #ifdef ELMT_PLATFORM_WINDOWS
-#include <Windows.h>
+#    include <Windows.h>
 #endif

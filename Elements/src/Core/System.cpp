@@ -2,7 +2,7 @@
 
 namespace Elements {
 
- MessageBus* System::bus;
+MessageBus *System::bus;
 
 System::System() {}
 
@@ -15,8 +15,8 @@ void System::deleteBus() { delete bus; }
 void System::handleMessage() {}
 
 void System::postMessage(MessageType type, std::any data) {
-  Message* msg = new Message(type, data);
-  bus->addMessage(msg);
+    Message *msg = new Message(type, data);
+    bus->addMessage(msg);
 }
 
-}  // namespace Elements
+} // namespace Elements
