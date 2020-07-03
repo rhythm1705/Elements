@@ -7,3 +7,6 @@
 [submodule "Elements/vendor/GLM"]
 	path = Elements/vendor/GLFW
 	url = https://github.com/g-truc/glm.git
+[submodule "Elements/vendor/Dear_ImGui"]
+	path = Elements/vendor/Dear_ImGui
+	url = https://github.com/rhythm1705/imgui.git

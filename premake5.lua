@@ -13,10 +13,11 @@ IncludeDir = {}
 IncludeDir["GLFW"] = "Elements/vendor/GLFW/include"
 IncludeDir["Vulkan"] = path.getrelative(".", "C:/VulkanSdk/1.2.141.2")
 IncludeDir["GLM"] = "Elements/vendor/GLM/"
+IncludeDir["Dear ImGui"] = "Elements/vendor/Dear_ImGui"
 
 group "Dependencies"
 	include "Elements/vendor/GLFW"
-
+	include "Elements/vendor/Dear_ImGui"
 group ""
 
 project "Elements"
@@ -48,14 +49,16 @@ project "Elements"
 		"%{prj.name}/vendor/spdlog/include",
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.Vulkan}/Include",
-		"%{IncludeDir.GLM}"
+		"%{IncludeDir.GLM}",
+		"%{IncludeDir.ImGui}"
 	}
 	
 	forceincludes { "elmtpch.h" }
 		
 	links {
 		"GLFW",
-		"vulkan-1.lib"
+		"vulkan-1.lib",
+		"Dear_ImGui"
 		}
 	
 	filter "system:windows"
