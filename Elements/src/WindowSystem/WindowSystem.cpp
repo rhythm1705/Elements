@@ -1,8 +1,8 @@
-#include "Window.h"
+#include "WindowSystem.h"
 
-#include "InputSystem/KeyInputMessage.h"
-#include "InputSystem/MouseInputMessage.h"
-#include "WindowMessage.h"
+#include "WindowSystem/Input/KeyInputMessage.h"
+#include "WindowSystem/Input/MouseInputMessage.h"
+#include "WindowSystem/WindowMessage.h"
 
 namespace Elements {
 

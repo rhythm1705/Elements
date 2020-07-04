@@ -8,8 +8,7 @@ Application *Application::instance = nullptr;
 
 Application::Application() {
     instance = this;
-    window = std::make_unique<WindowSystem>();
-    input = std::make_unique<InputSystem>();
+    windowSystem = std::make_unique<WindowSystem>();
 }
 
 Application::~Application() {}
@@ -25,23 +24,22 @@ void Application::pushOverlay(Layer *layer) {
 }
 
 void Application::run(MessageBus *bus) {
-    while (window->isRunning()) {
+    while (windowSystem->isRunning()) {
         if (!bus->isEmpty()) {
             Message *msg = bus->getMessage();
-            window->handleMessage(msg);
-            input->handleMessage();
+            windowSystem->handleMessage(msg);
             for (auto it = layerStack.rbegin(); it != layerStack.rend(); ++it) {
                 if (msg->isHandled()) break;
                 (*it)->handleMessage(msg);
             }
             bus->popMessage();
         }
-        if (!window->isMinimized()) {
+        if (!windowSystem->isMinimized()) {
             for (auto layer : layerStack) {
                 layer->onUpdate();
             }
         }
-        window->onUpdate();
+        windowSystem->onUpdate();
     }
 }
 

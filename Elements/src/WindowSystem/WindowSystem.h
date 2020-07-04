@@ -2,7 +2,6 @@
 
 #include "Core/System.h"
 #include "WindowSystem/WindowMessage.h"
-#include "elmtpch.h"
 
 #include <GLFW/glfw3.h>
 
@@ -18,26 +17,33 @@ struct WindowProps {
     : title(title), width(width), height(height) {}
 };
 
-class WindowSystem : System {
+class WindowSystem : public System {
   public:
     WindowSystem(const WindowProps &props = WindowProps());
     ~WindowSystem();
-    void onUpdate();
-    unsigned int getHeight();
-    unsigned int getWidth();
+
     void postMessage(Message *msg);
     void handleMessage(Message *msg);
+
+    void onUpdate();
     void onClose();
     void onResize(WindowResizeMessage *msg);
-    GLFWwindow *getWindow() { return window; }
+
+    unsigned int getHeight();
+    unsigned int getWidth();
+
+    GLFWwindow *getWindowPtr() { return window; }
+
     bool isRunning() { return running; }
     bool isMinimized() { return minimized; }
 
   private:
     void init(const WindowProps &props);
     void shutdown();
+
     GLFWwindow *window;
     WindowProps data;
+
     bool running;
     bool minimized;
 };

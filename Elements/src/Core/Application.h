@@ -3,12 +3,11 @@
 #pragma once
 
 #include "Core.h"
-#include "InputSystem/InputSystem.h"
-#include "InputSystem/KeyInputMessage.h"
 #include "LayerStack.h"
 #include "System.h"
-#include "WindowSystem/Window.h"
-#include "WindowSystem/WindowMessage.h"
+#include "WindowSystem/Input/Input.h"
+#include "WindowSystem/Input/KeyInputMessage.h"
+#include "WindowSystem/WindowSystem.h"
 
 namespace Elements {
 
@@ -21,14 +20,13 @@ class Application {
     void pushOverlay(Layer *layer);
 
     void run(MessageBus *bus);
-    WindowSystem &getWindow() { return *window; }
+    WindowSystem &getWindow() { return *windowSystem; }
     static Application &get() { return *instance; }
 
   private:
     static Application *instance;
     LayerStack layerStack;
-    std::unique_ptr<WindowSystem> window;
-    std::unique_ptr<InputSystem> input;
+    std::unique_ptr<WindowSystem> windowSystem;
 };
 
 Application *CreateApplication();

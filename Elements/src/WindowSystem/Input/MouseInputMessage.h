@@ -2,8 +2,8 @@
 
 #pragma once
 
-#include "InputSystem/MouseCodes.h"
 #include "MessageSystem/Message.h"
+#include "WindowSystem/Input/MouseCodes.h"
 
 namespace Elements {
 

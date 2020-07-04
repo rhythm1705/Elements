@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "InputSystem/KeyCodes.h"
+#include "WindowSystem/Input/KeyCodes.h"
 #include "MessageSystem/Message.h"
 
 namespace Elements {

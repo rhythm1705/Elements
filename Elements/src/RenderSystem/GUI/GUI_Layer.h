@@ -9,8 +9,11 @@ class GUI_Layer : public Layer {
     GUI_Layer();
     ~GUI_Layer();
 
+    void onAttach();
+    void onDetach();
+
     void onUpdate();
-    void handleMessage();
+    void handleMessage(Message *message);
 };
 
 } // namespace Elements

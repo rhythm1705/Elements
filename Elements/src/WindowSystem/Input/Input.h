@@ -8,14 +8,13 @@
 
 namespace Elements {
 
-class InputSystem : System {
+class Input {
   public:
     bool isKeyPressed(KeyCode key);
     bool isMousePressed(MouseCode button);
     std::pair<float, float> getMousePosition();
     float getMouseXPosition();
     float getMouseYPosition();
-    void handleMessage();
 };
 
 } // namespace Elements

@@ -13,7 +13,7 @@ IncludeDir = {}
 IncludeDir["GLFW"] = "Elements/vendor/GLFW/include"
 IncludeDir["Vulkan"] = path.getrelative(".", "C:/VulkanSdk/1.2.141.2")
 IncludeDir["GLM"] = "Elements/vendor/GLM/"
-IncludeDir["Dear ImGui"] = "Elements/vendor/Dear_ImGui"
+IncludeDir["DearImGui"] = "Elements/vendor/Dear_ImGui"
 
 group "Dependencies"
 	include "Elements/vendor/GLFW"
@@ -50,7 +50,7 @@ project "Elements"
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.Vulkan}/Include",
 		"%{IncludeDir.GLM}",
-		"%{IncludeDir.ImGui}"
+		"%{IncludeDir.DearImGui}"
 	}
 	
 	forceincludes { "elmtpch.h" }
@@ -92,6 +92,7 @@ project "Playground"
 	includedirs {
 		"Elements/src",
 		"Elements/vendor/spdlog/include",
+		"Elements/vendor",
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.Vulkan}/Include",
 		"%{IncludeDir.GLM}"
