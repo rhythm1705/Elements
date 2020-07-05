@@ -3,13 +3,9 @@
 namespace Elements {
 VulkanInstance *vulkanInstance = nullptr;
 
-VulkanInstance *VulkanInstance::getInstance(const std::string &appName,
-                                            const int appVersion,
-                                            const std::string &engineName,
-                                            const int engineVersion) {
+VulkanInstance *VulkanInstance::getInstance() {
     if (!vulkanInstance) {
         vulkanInstance = new VulkanInstance();
-        vulkanInstance->init(appName, appVersion, engineName, engineVersion);
     }
     return vulkanInstance;
 }
@@ -34,8 +30,8 @@ std::vector<const char *> VulkanInstance::getRequiredExtensions() {
 
 void VulkanInstance::destroy() {
     instance.destroy();
-    delete vulkanInstance;
-    vulkanInstance = nullptr;
+    /*delete vulkanInstance;
+    vulkanInstance = nullptr;*/
 }
 
 } // namespace Elements
