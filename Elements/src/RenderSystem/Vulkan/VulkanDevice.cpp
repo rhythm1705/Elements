@@ -9,7 +9,6 @@ VulkanDevice *vulkanDevice = nullptr;
 VulkanDevice *VulkanDevice::getInstance() {
     if (!vulkanDevice) {
         vulkanDevice = new VulkanDevice;
-        vulkanDevice->init();
     }
     return vulkanDevice;
 }
@@ -31,13 +30,13 @@ void VulkanDevice::pickPhysicalDevice() {
             break;
         }
     }
-    if (physicalDevice == VK_NULL_HANDLE) {
+    if (!physicalDevice) {
         ELMT_CORE_ERROR("Failed to find a suitable GPU!");
     }
 }
 
 void VulkanDevice::createLogicalDevice() {
-    QueueFamilyIndices indices = findQueueFamilies(physicalDevice);
+    VulkanQueue::QueueFamilyIndices indices = findQueueFamilies(physicalDevice);
     std::vector<vk::DeviceQueueCreateInfo> queueCreateInfos;
     std::set<uint32_t> uniqueQueueFamilies
       = { indices.graphicsFamily.value(), indices.presentFamily.value() };
@@ -58,19 +57,19 @@ void VulkanDevice::createLogicalDevice() {
 }
 
 bool VulkanDevice::isDeviceSuitable(vk::PhysicalDevice physicalDevice) {
-    QueueFamilyIndices indices = findQueueFamilies(physicalDevice);
+    VulkanQueue::QueueFamilyIndices indices = findQueueFamilies(physicalDevice);
     bool extensionsSupported = checkDeviceExtensionSupport(physicalDevice);
     bool swapChainAdequate = false;
     if (extensionsSupported) {
-        SwapChainSupportDetails swapChainSupport = querySwapChainSupport(physicalDevice);
+        VulkanSwapChain::SwapChainSupportDetails swapChainSupport = querySwapChainSupport(physicalDevice);
         swapChainAdequate = !swapChainSupport.formats.empty() && !swapChainSupport.presentModes.empty();
     }
     return indices.isComplete() && extensionsSupported && swapChainAdequate;
 }
 
-QueueFamilyIndices VulkanDevice::findQueueFamilies(vk::PhysicalDevice physicalDevice) {
+VulkanQueue::QueueFamilyIndices VulkanDevice::findQueueFamilies(vk::PhysicalDevice physicalDevice) {
     std::vector<vk::QueueFamilyProperties> queueFamilies = physicalDevice.getQueueFamilyProperties();
-    QueueFamilyIndices indices;
+    VulkanQueue::QueueFamilyIndices indices;
     int i = 0;
     auto surface = VulkanSurface::getInstance()->getVulkanSurface();
     for (const auto &queueFamily : queueFamilies) {
@@ -99,8 +98,8 @@ bool VulkanDevice::checkDeviceExtensionSupport(vk::PhysicalDevice physicalDevice
     return requiredExtensions.empty();
 }
 
-SwapChainSupportDetails VulkanDevice::querySwapChainSupport(vk::PhysicalDevice physicalDevice) {
-    SwapChainSupportDetails details;
+VulkanSwapChain::SwapChainSupportDetails VulkanDevice::querySwapChainSupport(vk::PhysicalDevice physicalDevice) {
+    VulkanSwapChain::SwapChainSupportDetails details;
     auto surface = VulkanSurface::getInstance()->getVulkanSurface();
     details.capabilities = physicalDevice.getSurfaceCapabilitiesKHR(surface);
     details.formats = physicalDevice.getSurfaceFormatsKHR(surface);

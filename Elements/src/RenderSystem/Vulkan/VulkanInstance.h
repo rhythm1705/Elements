@@ -8,12 +8,11 @@ namespace Elements {
 
 class VulkanInstance {
   public:
-    static VulkanInstance *
-    getInstance();
+    static VulkanInstance *getInstance();
 
     void init(const std::string &appName, const int appVersion, const std::string &engineName, const int engineVersion);
 
-    vk::Instance &getVulkanInstance() { return instance; };
+    vk::Instance getVulkanInstance() { return instance; };
 
     void destroy();
 

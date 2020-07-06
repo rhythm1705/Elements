@@ -11,5 +11,7 @@ VulkanGraphicsQueue *VulkanGraphicsQueue::getInstance() {
     }
     return vulkanGraphicsQueue;
 }
-void VulkanGraphicsQueue::init() { VulkanDevice::getInstance()->getVulkanDevice() }
+void VulkanGraphicsQueue::init(const QueueFamilyIndices &queueFamilyIndices) {
+    VulkanDevice::getInstance()->getVulkanDevice().getQueue(queueFamilyIndices.graphicsFamily.value(), 0, &queue);
+}
 } // namespace Elements

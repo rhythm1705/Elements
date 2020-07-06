@@ -8,6 +8,7 @@
 #    ifdef _WIN64
 // Windows x64
 #        define ELMT_PLATFORM_WINDOWS
+#        define NOMINMAX
 #    else
 // Windows x86
 #        error "32-Bit Builds are not supported!"

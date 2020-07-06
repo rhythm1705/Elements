@@ -8,10 +8,10 @@ class VulkanQueue {
     vk::Queue &getQueue() { return queue; };
 
     struct QueueFamilyIndices {
-        int graphics_family = -1;
-        int present_family = -1;
+        std::optional<uint32_t> graphicsFamily;
+        std::optional<uint32_t> presentFamily;
 
-        bool is_complete() const { return graphics_family >= 0 && present_family >= 0; }
+        bool isComplete() { return graphicsFamily.has_value() && presentFamily.has_value(); }
     };
 
   protected:

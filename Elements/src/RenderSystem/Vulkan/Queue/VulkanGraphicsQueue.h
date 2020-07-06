@@ -9,11 +9,11 @@ class VulkanGraphicsQueue : public VulkanQueue {
   public:
     VulkanGraphicsQueue *getInstance();
 
+    void init(const QueueFamilyIndices &queueFamilyIndices);
+
   private:
     VulkanGraphicsQueue() = default;
     ~VulkanGraphicsQueue(){};
-
-    void init();
 
     static VulkanGraphicsQueue *vulkanGraphicsQueue;
 };

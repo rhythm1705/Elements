@@ -35,10 +35,10 @@ MaxEmptyLinesToKeep: 2
 NamespaceIndentation: Inner
 ObjCSpaceAfterProperty: true
 ObjCSpaceBeforeProtocolList: true
-PenaltyBreakBeforeFirstCallParameter: 100
-PenaltyBreakComment: 100
+PenaltyBreakBeforeFirstCallParameter: 0
+PenaltyBreakComment: 0
 PenaltyBreakFirstLessLess: 0
-PenaltyBreakString: 100
+PenaltyBreakString: 0
 PenaltyExcessCharacter: 1
 PenaltyReturnTypeOnItsOwnLine: 20
 PointerAlignment: Right

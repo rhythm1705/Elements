@@ -11,7 +11,6 @@ VulkanSurface *vulkanSurface = nullptr;
 VulkanSurface *VulkanSurface::getInstance() {
     if (!vulkanSurface) {
         vulkanSurface = new VulkanSurface();
-        vulkanSurface->init();
     }
     return vulkanSurface;
 }
