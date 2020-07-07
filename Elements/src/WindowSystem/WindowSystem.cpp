@@ -1,5 +1,6 @@
 #include "WindowSystem.h"
 
+#include "Core/Application.h"
 #include "WindowSystem/Input/KeyInputMessage.h"
 #include "WindowSystem/Input/MouseInputMessage.h"
 #include "WindowSystem/WindowMessage.h"
@@ -14,22 +15,13 @@ Elements::WindowSystem::~WindowSystem() { shutdown(); }
 
 void Elements::WindowSystem::onUpdate() { glfwPollEvents(); }
 
-unsigned int Elements::WindowSystem::getHeight() { return 0; }
+unsigned int Elements::WindowSystem::getHeight() { return data.width; }
 
-unsigned int Elements::WindowSystem::getWidth() { return 0; }
+unsigned int Elements::WindowSystem::getWidth() { return data.height; }
 
 void WindowSystem::postMessage(Message *msg) { getBus()->addMessage(msg); }
 
-void WindowSystem::handleMessage(Message *msg) {
-    if (msg->getType() == MessageType::WindowClose) {
-        ELMT_CORE_INFO("Closing Window");
-        WindowSystem::onClose();
-    } else if (msg->getType() == MessageType::WindowResize) {
-        // ELMT_CORE_INFO("Resizing Window");
-        WindowResizeMessage *rszMsg = (WindowResizeMessage *)msg;
-        WindowSystem::onResize(rszMsg);
-    }
-}
+void WindowSystem::handleMessage(Message *msg) {}
 
 void WindowSystem::onClose() { running = false; }
 
@@ -69,13 +61,15 @@ void WindowSystem::init(const WindowProps &props) {
         data.height = height;
         WindowResizeMessage *msg
           = new WindowResizeMessage(std::pair<unsigned int, unsigned int>(width, height));
-        data.windowMessage(msg);
+        Application::get().getWindow().onResize(msg);
+        // data.windowMessage(msg);
     });
 
     glfwSetWindowCloseCallback(window, [](GLFWwindow *window) {
-        WindowProps &data = *(WindowProps *)glfwGetWindowUserPointer(window);
-        WindowCloseMessage *msg = new WindowCloseMessage(NULL);
-        data.windowMessage(msg);
+        // WindowProps &data = *(WindowProps *)glfwGetWindowUserPointer(window);
+        Application::get().getWindow().onClose();
+        /*WindowCloseMessage *msg = new WindowCloseMessage(NULL);
+        data.windowMessage(msg);*/
     });
 
     glfwSetKeyCallback(window, [](GLFWwindow *window, int key, int scancode, int action, int mods) {

@@ -2,6 +2,8 @@
  * prevent resizing of queue. An immediate queue where the message's receiver is known for quicker
  * messaging might also be implemented. Uses a lot of dynamic allocations currently. */
 
+// TODO: Make it a singleton class.
+
 #pragma once
 
 #include "Message.h"

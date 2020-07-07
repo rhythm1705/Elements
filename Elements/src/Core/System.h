@@ -1,5 +1,8 @@
 /* An interface for different engine systems. */
 
+// TODO: Add  startUp, shutDown and process message methods. Handle message gets the latest message
+// from bus, if handled then return, else process the message.
+
 #pragma once
 
 #include "MessageSystem/Message.h"
