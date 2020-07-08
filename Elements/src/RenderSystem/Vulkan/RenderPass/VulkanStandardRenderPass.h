@@ -8,13 +8,11 @@ class VulkanStandardRenderPass : public VulkanRenderPass {
 
     void init(vk::Format &swapChainImageFormat);
 
-    void destroy();
-
   private:
     VulkanStandardRenderPass();
     ~VulkanStandardRenderPass(){};
 
-    VulkanStandardRenderPass *instance;
+    static VulkanStandardRenderPass *instance;
 };
 
 } // namespace Elements

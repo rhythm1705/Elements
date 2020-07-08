@@ -1,22 +1,23 @@
-#include "VulkanStandardRenderPass.h"
+#include "VulkanGUIRenderPass.h"
 
 #include "RenderSystem/Vulkan/VulkanDevice.h"
 
 namespace Elements {
-VulkanStandardRenderPass *instance = nullptr;
+VulkanGUIRenderPass *instance = nullptr;
 
-VulkanStandardRenderPass *VulkanStandardRenderPass::getInstance() {
+VulkanGUIRenderPass *VulkanGUIRenderPass::getInstance() {
     if (!instance) {
-        instance = new VulkanStandardRenderPass();
+        instance = new VulkanGUIRenderPass();
     }
     return instance;
 }
 
-void VulkanStandardRenderPass::init(vk::Format &swapChainImageFormat) {
+void VulkanGUIRenderPass::init(vk::Format &swapChainImageFormat) {
     vk::AttachmentDescription colorAttachment(
       vk::AttachmentDescriptionFlags(), swapChainImageFormat, vk::SampleCountFlagBits::e1,
-      vk::AttachmentLoadOp::eClear, vk::AttachmentStoreOp::eStore, vk::AttachmentLoadOp::eDontCare,
-      vk::AttachmentStoreOp::eDontCare, vk::ImageLayout::eUndefined, vk::ImageLayout::ePresentSrcKHR);
+      vk::AttachmentLoadOp::eLoad, vk::AttachmentStoreOp::eStore, vk::AttachmentLoadOp::eDontCare,
+      vk::AttachmentStoreOp::eDontCare, vk::ImageLayout::eColorAttachmentOptimal,
+      vk::ImageLayout::ePresentSrcKHR);
 
     vk::AttachmentReference colorAttachmentRef(0, vk::ImageLayout::eColorAttachmentOptimal);
 

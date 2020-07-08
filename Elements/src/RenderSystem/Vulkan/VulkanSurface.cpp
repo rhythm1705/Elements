@@ -6,7 +6,7 @@
 #include <GLFW/glfw3.h>
 
 namespace Elements {
-VulkanSurface *vulkanSurface = nullptr;
+VulkanSurface *VulkanSurface::vulkanSurface = nullptr;
 
 VulkanSurface *VulkanSurface::getInstance() {
     if (!vulkanSurface) {

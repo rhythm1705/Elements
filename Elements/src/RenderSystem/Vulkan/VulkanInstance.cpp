@@ -1,7 +1,7 @@
 #include "VulkanInstance.h"
 
 namespace Elements {
-VulkanInstance *vulkanInstance = nullptr;
+VulkanInstance *VulkanInstance::vulkanInstance = nullptr;
 
 VulkanInstance *VulkanInstance::getInstance() {
     if (!vulkanInstance) {

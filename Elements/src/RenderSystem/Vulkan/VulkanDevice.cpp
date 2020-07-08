@@ -4,7 +4,7 @@
 #include "VulkanSurface.h"
 
 namespace Elements {
-VulkanDevice *vulkanDevice = nullptr;
+VulkanDevice *VulkanDevice::vulkanDevice = nullptr;
 
 VulkanDevice *VulkanDevice::getInstance() {
     if (!vulkanDevice) {
@@ -46,11 +46,9 @@ void VulkanDevice::createLogicalDevice() {
         queueCreateInfos.push_back(queueCreateInfo);
     }
     vk::PhysicalDeviceFeatures deviceFeatures{};
-    vk::DeviceCreateInfo deviceCreateInfo(vk::DeviceCreateFlags(),
-                                          static_cast<uint32_t>(queueCreateInfos.size()),
-                                          queueCreateInfos.data(), 0, nullptr,
-                                          static_cast<uint32_t>(deviceExtensions.size()),
-                                          deviceExtensions.data(), &deviceFeatures);
+    vk::DeviceCreateInfo deviceCreateInfo(
+      vk::DeviceCreateFlags(), static_cast<uint32_t>(queueCreateInfos.size()), queueCreateInfos.data(),
+      0, nullptr, static_cast<uint32_t>(deviceExtensions.size()), deviceExtensions.data(), &deviceFeatures);
     if (physicalDevice.createDevice(&deviceCreateInfo, nullptr, &logicalDevice) != vk::Result::eSuccess) {
         ELMT_CORE_ERROR("Failed to create logical device!");
     }

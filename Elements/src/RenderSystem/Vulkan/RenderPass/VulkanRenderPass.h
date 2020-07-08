@@ -7,7 +7,9 @@ class VulkanRenderPass {
   public:
     vk::RenderPass &getRenderPass() { return renderPass; }
 
-  private:
+    void destroy();
+
+  protected:
     vk::RenderPass renderPass;
 };
 
