@@ -7,7 +7,7 @@
 #include "Core/Layer.h"
 #include "Core/System.h"
 #include "Utilities/Log.h"
-#include "MessageSystem/Message.h"
+#include "Messaging/Message.h"
 #include "WindowSystem/Input/KeyCodes.h"
 #include "WindowSystem/Input/MouseCodes.h"
 

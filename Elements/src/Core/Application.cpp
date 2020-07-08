@@ -1,6 +1,6 @@
 #include "Application.h"
 
-#include "MessageSystem/MessageBus.h"
+#include "Messaging/MessageBus.h"
 
 namespace Elements {
 

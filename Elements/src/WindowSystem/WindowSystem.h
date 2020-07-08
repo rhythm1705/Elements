@@ -1,7 +1,9 @@
 #pragma once
 
 #include "Core/System.h"
+#include "Messaging/Message.h"
 #include "WindowSystem/WindowMessage.h"
+
 #include <GLFW/glfw3.h>
 
 namespace Elements {
@@ -18,15 +20,12 @@ struct WindowProps {
 
 class WindowSystem : public System {
   public:
-    WindowSystem(const WindowProps &props = WindowProps());
-    ~WindowSystem();
+    void startUp() override;
+    void shutDown() override;
+    void onUpdate() override;
 
-    void postMessage(Message *msg);
-    void handleMessage(Message *msg);
-
-    void onUpdate();
     void onClose();
-    void onResize(WindowResizeMessage *msg);
+    void onResize(int width, int height);
 
     unsigned int getHeight();
     unsigned int getWidth();
@@ -37,8 +36,7 @@ class WindowSystem : public System {
     bool isMinimized() { return minimized; }
 
   private:
-    void init(const WindowProps &props);
-    void shutdown();
+    void init(const WindowProps &props = WindowProps());
 
     GLFWwindow *window;
     WindowProps data;

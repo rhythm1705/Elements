@@ -9,9 +9,16 @@ namespace Elements {
 
 static uint8_t GLFWWindowCount = 0;
 
-Elements::WindowSystem::WindowSystem(const WindowProps &props) { init(props); }
+void Elements::WindowSystem::startUp() { init(); }
 
-Elements::WindowSystem::~WindowSystem() { shutdown(); }
+void Elements::WindowSystem::shutDown() {
+    glfwDestroyWindow(window);
+    --GLFWWindowCount;
+
+    if (GLFWWindowCount == 0) {
+        glfwTerminate();
+    }
+}
 
 void Elements::WindowSystem::onUpdate() { glfwPollEvents(); }
 
@@ -19,14 +26,10 @@ unsigned int Elements::WindowSystem::getHeight() { return data.width; }
 
 unsigned int Elements::WindowSystem::getWidth() { return data.height; }
 
-void WindowSystem::postMessage(Message *msg) { getBus()->addMessage(msg); }
-
-void WindowSystem::handleMessage(Message *msg) {}
-
 void WindowSystem::onClose() { running = false; }
 
-void WindowSystem::onResize(WindowResizeMessage *msg) {
-    if (msg->getWidth() == 0 || msg->getHeight() == 0) {
+void WindowSystem::onResize(int width, int height) {
+    if (width == 0 || height == 0) {
         minimized = true;
     }
     minimized = false;
@@ -59,18 +62,11 @@ void WindowSystem::init(const WindowProps &props) {
         WindowProps &data = *(WindowProps *)glfwGetWindowUserPointer(window);
         data.width = width;
         data.height = height;
-        WindowResizeMessage *msg
-          = new WindowResizeMessage(std::pair<unsigned int, unsigned int>(width, height));
-        Application::get().getWindow().onResize(msg);
-        // data.windowMessage(msg);
+        Application::get().getWindow().onResize(width, height);
     });
 
-    glfwSetWindowCloseCallback(window, [](GLFWwindow *window) {
-        // WindowProps &data = *(WindowProps *)glfwGetWindowUserPointer(window);
-        Application::get().getWindow().onClose();
-        /*WindowCloseMessage *msg = new WindowCloseMessage(NULL);
-        data.windowMessage(msg);*/
-    });
+    glfwSetWindowCloseCallback(
+      window, [](GLFWwindow *window) { Application::get().getWindow().onClose(); });
 
     glfwSetKeyCallback(window, [](GLFWwindow *window, int key, int scancode, int action, int mods) {
         WindowProps &data = *(WindowProps *)glfwGetWindowUserPointer(window);
@@ -127,15 +123,6 @@ void WindowSystem::init(const WindowProps &props) {
         MouseMoveMessage *msg = new MouseMoveMessage(std::pair<float, float>((float)xPos, (float)yPos));
         data.windowMessage(msg);
     });
-}
-
-void Elements::WindowSystem::shutdown() {
-    glfwDestroyWindow(window);
-    --GLFWWindowCount;
-
-    if (GLFWWindowCount == 0) {
-        glfwTerminate();
-    }
 }
 
 } // namespace Elements
