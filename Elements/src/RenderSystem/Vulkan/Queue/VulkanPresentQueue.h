@@ -2,12 +2,10 @@
 
 #include "VulkanQueue.h"
 
-#include <vulkan/vulkan.hpp>
-
 namespace Elements {
 class VulkanPresentQueue : public VulkanQueue {
   public:
-    VulkanPresentQueue *getInstance();
+    static VulkanPresentQueue *getInstance();
 
     void init(const QueueFamilyIndices &queueFamilyIndices);
 

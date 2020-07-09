@@ -10,6 +10,9 @@ class VulkanRenderPass {
     void destroy();
 
   protected:
+    VulkanRenderPass() = default;
+    ~VulkanRenderPass(){};
+
     vk::RenderPass renderPass;
 };
 

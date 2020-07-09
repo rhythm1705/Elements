@@ -3,13 +3,13 @@
 #include "VulkanDevice.h"
 
 namespace Elements {
-VulkanShaderManager *VulkanShaderManager::vulkanShaderManager = nullptr;
+VulkanShaderManager *VulkanShaderManager::instance = nullptr;
 
 VulkanShaderManager *VulkanShaderManager::getInstance() {
-    if (!vulkanShaderManager) {
-        vulkanShaderManager = new VulkanShaderManager();
+    if (!instance) {
+        instance = new VulkanShaderManager();
     }
-    return vulkanShaderManager;
+    return instance;
 }
 
 vk::ShaderModule VulkanShaderManager::getShaderModule(const std::string &filename) {
@@ -34,7 +34,7 @@ void VulkanShaderManager::cleanUpShaders() {
 std::vector<char> VulkanShaderManager::readFile(const std::string &filename) {
     std::ifstream file(filename, std::ios::ate | std::ios::binary);
     if (!file.is_open()) {
-        throw std::runtime_error("failed to open file!");
+        ELMT_CORE_ERROR("failed to open file!");
     }
     size_t fileSize = (size_t)file.tellg();
     std::vector<char> buffer(fileSize);

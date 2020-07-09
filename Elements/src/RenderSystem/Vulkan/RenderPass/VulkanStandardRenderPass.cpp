@@ -3,7 +3,7 @@
 #include "RenderSystem/Vulkan/VulkanDevice.h"
 
 namespace Elements {
-VulkanStandardRenderPass *instance = nullptr;
+VulkanStandardRenderPass *VulkanStandardRenderPass::instance = nullptr;
 
 VulkanStandardRenderPass *VulkanStandardRenderPass::getInstance() {
     if (!instance) {
@@ -23,13 +23,13 @@ void VulkanStandardRenderPass::init(vk::Format &swapChainImageFormat) {
     vk::SubpassDescription subpass(
       vk::SubpassDescriptionFlags(), vk::PipelineBindPoint::eGraphics, 1, &colorAttachmentRef);
 
-    vk::SubpassDependency dependency{};
-    dependency.srcSubpass = VK_SUBPASS_EXTERNAL;
-    dependency.dstSubpass = 0;
-    dependency.srcStageMask = vk::PipelineStageFlagBits::eColorAttachmentOutput;
-    dependency.dstStageMask = vk::PipelineStageFlagBits::eColorAttachmentOutput;
-    dependency.srcAccessMask = vk::AccessFlagBits::eColorAttachmentWrite;
-    dependency.dstAccessMask = vk::AccessFlagBits::eColorAttachmentWrite;
+    vk::SubpassDependency dependency;
+    dependency.setSrcSubpass(VK_SUBPASS_EXTERNAL);
+    dependency.setDstSubpass(0);
+    dependency.setSrcStageMask(vk::PipelineStageFlagBits::eColorAttachmentOutput);
+    dependency.setDstStageMask(vk::PipelineStageFlagBits::eColorAttachmentOutput);
+    dependency.setSrcAccessMask(vk::AccessFlagBits::eColorAttachmentWrite);
+    dependency.setDstAccessMask(vk::AccessFlagBits::eColorAttachmentWrite);
 
     vk::RenderPassCreateInfo renderPassInfo(
       vk::RenderPassCreateFlags(), 1, &colorAttachment, 1, &subpass, 1, &dependency);

@@ -2,8 +2,6 @@
 
 #include "VulkanQueue.h"
 
-#include <vulkan/vulkan.hpp>
-
 namespace Elements {
 class VulkanGraphicsQueue : public VulkanQueue {
   public:

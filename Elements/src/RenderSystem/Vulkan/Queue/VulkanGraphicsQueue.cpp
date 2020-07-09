@@ -3,7 +3,7 @@
 #include "RenderSystem/Vulkan/VulkanDevice.h"
 
 namespace Elements {
-VulkanGraphicsQueue *vulkanGraphicsQueue = nullptr;
+VulkanGraphicsQueue *VulkanGraphicsQueue::vulkanGraphicsQueue = nullptr;
 
 VulkanGraphicsQueue *VulkanGraphicsQueue::getInstance() {
     if (!vulkanGraphicsQueue) {

@@ -9,7 +9,7 @@ class VulkanStandardRenderPass : public VulkanRenderPass {
     void init(vk::Format &swapChainImageFormat);
 
   private:
-    VulkanStandardRenderPass();
+    VulkanStandardRenderPass() = default;
     ~VulkanStandardRenderPass(){};
 
     static VulkanStandardRenderPass *instance;

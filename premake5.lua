@@ -88,7 +88,7 @@ project "Playground"
 		"%{prj.name}/src/**.h", 
 		"%{prj.name}/src/**.cpp" 
 	}
-	
+		
 	includedirs {
 		"Elements/src",
 		"Elements/vendor/spdlog/include",

@@ -3,7 +3,7 @@
 #include "RenderSystem/Vulkan/VulkanDevice.h"
 
 namespace Elements {
-VulkanGUIRenderPass *instance = nullptr;
+VulkanGUIRenderPass *VulkanGUIRenderPass::instance = nullptr;
 
 VulkanGUIRenderPass *VulkanGUIRenderPass::getInstance() {
     if (!instance) {

@@ -12,8 +12,8 @@ class VulkanDevice {
 
     void init();
 
-    vk::PhysicalDevice getVulkanPhysicalDevice() { return physicalDevice; }
-    vk::Device getVulkanDevice() { return logicalDevice; }
+    vk::PhysicalDevice &getVulkanPhysicalDevice() { return physicalDevice; }
+    vk::Device &getVulkanDevice() { return logicalDevice; }
 
     VulkanQueue::QueueFamilyIndices getQueueFamilyIndices() { return queueFamilyIndices; }
 
