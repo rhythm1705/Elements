@@ -5,10 +5,7 @@
 namespace Elements {
 class VulkanGraphicsPipeline {
   public:
-    VulkanGraphicsPipeline(const char *vertexShader,
-                           const char *fragmentShader,
-                           const vk::Extent2D &swapChainExtent,
-                           vk::DescriptorSetLayout *descriptorSetLayout);
+    VulkanGraphicsPipeline(const char *vertexShader, const char *fragmentShader, const vk::Extent2D &swapChainExtent);
     ~VulkanGraphicsPipeline();
 
     vk::Pipeline getPipeline();

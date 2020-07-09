@@ -12,13 +12,22 @@ namespace Elements {
 
 class MessageBus {
   public:
-    std::queue<Message *> messageQueue;
+    static MessageBus *getBus();
+
     void addMessage(Message *msg);
-    Message *getMessage();
     void popMessage();
+
+    Message *peek();
+
     bool isEmpty();
+
+  private:
     MessageBus();
     ~MessageBus();
+
+    static MessageBus *instance;
+
+    std::queue<Message *> messageQueue;
 };
 
 } // namespace Elements

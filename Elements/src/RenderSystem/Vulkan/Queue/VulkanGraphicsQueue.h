@@ -7,7 +7,7 @@
 namespace Elements {
 class VulkanGraphicsQueue : public VulkanQueue {
   public:
-    VulkanGraphicsQueue *getInstance();
+    static VulkanGraphicsQueue *getInstance();
 
     void init(const QueueFamilyIndices &queueFamilyIndices);
 

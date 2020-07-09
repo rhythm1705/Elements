@@ -6,7 +6,7 @@ namespace Elements {
 
 class VulkanFramebuffers {
   public:
-    VulkanFramebuffers(VulkanImageViews *vulkanImageViewsj, vk::Extent2D extent);
+    VulkanFramebuffers(VulkanImageViews *vulkanImageViews, vk::Extent2D extent);
     ~VulkanFramebuffers();
 
     std::vector<vk::Framebuffer> getFrameBuffers() { return framebuffers; }

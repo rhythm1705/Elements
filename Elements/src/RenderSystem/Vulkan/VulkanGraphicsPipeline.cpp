@@ -8,8 +8,7 @@ namespace Elements {
 
 VulkanGraphicsPipeline::VulkanGraphicsPipeline(const char *vertexShader,
                                                const char *fragmentShader,
-                                               const vk::Extent2D &swapChainExtent,
-                                               vk::DescriptorSetLayout *descriptorSetLayout) {
+                                               const vk::Extent2D &swapChainExtent) {
     vk::ShaderModule vertShaderModule = VulkanShaderManager::getInstance()->getShaderModule(vertexShader);
     vk::ShaderModule fragShaderModule = VulkanShaderManager::getInstance()->getShaderModule(fragmentShader);
     vk::PipelineShaderStageCreateInfo vertShaderStageInfo(

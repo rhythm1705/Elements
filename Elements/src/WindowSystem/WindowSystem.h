@@ -37,12 +37,13 @@ class WindowSystem : public System {
 
   private:
     void init(const WindowProps &props = WindowProps());
+    void postMessage(Message *msg);
 
     GLFWwindow *window;
     WindowProps data;
 
-    bool running;
-    bool minimized;
+    bool running = true;
+    bool minimized = false;
 };
 
 } // namespace Elements

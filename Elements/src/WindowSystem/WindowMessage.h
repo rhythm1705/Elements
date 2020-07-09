@@ -1,6 +1,6 @@
 #pragma once
 
-#include "MessageSystem/Message.h"
+#include "Messaging/Message.h"
 
 namespace Elements {
 

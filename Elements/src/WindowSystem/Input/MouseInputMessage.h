@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "MessageSystem/Message.h"
+#include "Messaging/Message.h"
 #include "WindowSystem/Input/MouseCodes.h"
 
 namespace Elements {

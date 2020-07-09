@@ -1,9 +1,9 @@
 #include "WindowSystem.h"
 
 #include "Core/Application.h"
+#include "Messaging/MessageBus.h"
 #include "WindowSystem/Input/KeyInputMessage.h"
 #include "WindowSystem/Input/MouseInputMessage.h"
-#include "WindowSystem/WindowMessage.h"
 
 namespace Elements {
 
@@ -123,6 +123,11 @@ void WindowSystem::init(const WindowProps &props) {
         MouseMoveMessage *msg = new MouseMoveMessage(std::pair<float, float>((float)xPos, (float)yPos));
         data.windowMessage(msg);
     });
+}
+
+void WindowSystem::postMessage(Message *message) {
+    auto bus = MessageBus::getBus();
+    bus->addMessage(message);
 }
 
 } // namespace Elements

@@ -4,10 +4,8 @@
 
 #include "Core.h"
 #include "LayerStack.h"
-#include "System.h"
-#include "WindowSystem/Input/Input.h"
-#include "WindowSystem/Input/KeyInputMessage.h"
 #include "WindowSystem/WindowSystem.h"
+#include "RenderSystem/RenderSystem.h"
 
 namespace Elements {
 
@@ -19,14 +17,16 @@ class Application {
     void pushLayer(Layer *layer);
     void pushOverlay(Layer *layer);
 
-    void run(MessageBus *bus);
+    void run();
     WindowSystem &getWindow() { return *windowSystem; }
     static Application &get() { return *instance; }
 
   private:
     static Application *instance;
     LayerStack layerStack;
+
     std::unique_ptr<WindowSystem> windowSystem;
+    std::unique_ptr<RenderSystem> renderSystem;
 };
 
 Application *CreateApplication();

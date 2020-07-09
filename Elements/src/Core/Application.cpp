@@ -9,9 +9,14 @@ Application *Application::instance = nullptr;
 Application::Application() {
     instance = this;
     windowSystem = std::make_unique<WindowSystem>();
+    renderSystem = std::make_unique<RenderSystem>();
 }
 
-Application::~Application() {}
+Application::~Application() {
+    // Shut down all systems
+    renderSystem->shutDown();
+    windowSystem->shutDown();
+}
 
 void Application::pushLayer(Layer *layer) {
     layerStack.pushLayer(layer);
@@ -23,23 +28,25 @@ void Application::pushOverlay(Layer *layer) {
     layer->onAttach();
 }
 
-void Application::run(MessageBus *bus) {
+void Application::run() {
+    // Start up all systems
+    windowSystem->startUp();
+    renderSystem->startUp();
+
+    // Get the message bus
+    auto bus = MessageBus::getBus();
+
     while (windowSystem->isRunning()) {
-        if (!bus->isEmpty()) {
-            Message *msg = bus->getMessage();
-            windowSystem->handleMessage(msg);
-            for (auto it = layerStack.rbegin(); it != layerStack.rend(); ++it) {
-                if (msg->isHandled()) break;
-                (*it)->handleMessage(msg);
-            }
-            bus->popMessage();
-        }
         if (!windowSystem->isMinimized()) {
-            for (auto layer : layerStack) {
-                layer->onUpdate();
+            while (!bus->isEmpty()) {
+                for (auto layer : layerStack) {
+                    layer->onUpdate();
+                }
+                bus->popMessage();
             }
         }
         windowSystem->onUpdate();
+        renderSystem->onUpdate();
     }
 }
 

@@ -26,7 +26,7 @@ class VulkanSwapChain {
   private:
     vk::SwapchainKHR swapChain;
     std::vector<vk::Image> swapChainImages;
-    vk::Format swapChainImageFormat = vk::Format::eUndefined;
+    vk::Format swapChainImageFormat;
     vk::Extent2D swapChainExtent;
 };
 } // namespace Elements

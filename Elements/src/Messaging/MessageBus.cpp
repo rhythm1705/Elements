@@ -2,9 +2,18 @@
 
 namespace Elements {
 
+MessageBus *MessageBus::instance = nullptr;
+
+MessageBus *MessageBus::getBus() {
+    if (!instance) {
+        instance = new MessageBus();
+    }
+    return instance;
+}
+
 void MessageBus::addMessage(Message *msg) { messageQueue.push(msg); }
 
-Message *MessageBus::getMessage() { return messageQueue.front(); }
+Message *MessageBus::peek() { return messageQueue.front(); }
 
 void MessageBus::popMessage() {
     // ELMT_CORE_INFO("{0}", messageQueue.front()->toString());
