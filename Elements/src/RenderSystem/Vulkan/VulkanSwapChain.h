@@ -8,10 +8,10 @@ class VulkanSwapChain {
     VulkanSwapChain();
     ~VulkanSwapChain();
 
-    vk::SwapchainKHR getSwapChain() { return swapChain; }
-    std::vector<vk::Image> getSwapChainImages() { return swapChainImages; }
-    vk::Format getSwapChainImageFormat() { return swapChainImageFormat; }
-    vk::Extent2D getswapChainExtent() { return swapChainExtent; }
+    vk::SwapchainKHR &getSwapChain() { return swapChain; }
+    std::vector<vk::Image> &getSwapChainImages() { return swapChainImages; }
+    vk::Format &getSwapChainImageFormat() { return swapChainImageFormat; }
+    vk::Extent2D &getswapChainExtent() { return swapChainExtent; }
 
     vk::SurfaceFormatKHR chooseSwapSurfaceFormat(const std::vector<vk::SurfaceFormatKHR> &availableFormats);
     vk::PresentModeKHR chooseSwapPresentMode(const std::vector<vk::PresentModeKHR> &availablePresentModes);

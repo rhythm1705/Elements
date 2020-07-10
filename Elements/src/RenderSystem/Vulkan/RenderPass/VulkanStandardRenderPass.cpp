@@ -20,15 +20,15 @@ void VulkanStandardRenderPass::init(vk::Format &swapChainImageFormat) {
 
     vk::AttachmentReference colorAttachmentRef(0, vk::ImageLayout::eColorAttachmentOptimal);
 
-    vk::SubpassDescription subpass(
-      vk::SubpassDescriptionFlags(), vk::PipelineBindPoint::eGraphics, 1, &colorAttachmentRef);
+    vk::SubpassDescription subpass(vk::SubpassDescriptionFlags(), vk::PipelineBindPoint::eGraphics,
+                                   0, nullptr, 1, &colorAttachmentRef);
 
     vk::SubpassDependency dependency;
     dependency.setSrcSubpass(VK_SUBPASS_EXTERNAL);
     dependency.setDstSubpass(0);
     dependency.setSrcStageMask(vk::PipelineStageFlagBits::eColorAttachmentOutput);
     dependency.setDstStageMask(vk::PipelineStageFlagBits::eColorAttachmentOutput);
-    dependency.setSrcAccessMask(vk::AccessFlagBits::eColorAttachmentWrite);
+    dependency.setSrcAccessMask(vk::AccessFlagBits::eColorAttachmentRead);
     dependency.setDstAccessMask(vk::AccessFlagBits::eColorAttachmentWrite);
 
     vk::RenderPassCreateInfo renderPassInfo(

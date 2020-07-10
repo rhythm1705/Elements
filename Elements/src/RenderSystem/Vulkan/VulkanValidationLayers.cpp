@@ -67,7 +67,7 @@ VulkanValidationLayers::debugCallback(VkDebugUtilsMessageSeverityFlagBitsEXT mes
                                       VkDebugUtilsMessageTypeFlagsEXT messageType,
                                       const VkDebugUtilsMessengerCallbackDataEXT *callbackData,
                                       void *userData) {
-    ELMT_CORE_ERROR("validation layer: {0} ", callbackData->pMessage);
+    ELMT_CORE_ERROR("Message: {0}\n ", callbackData->pMessage);
     return VK_FALSE;
 }
 

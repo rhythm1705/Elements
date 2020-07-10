@@ -87,9 +87,10 @@ void RenderSystem::init() {
     ELMT_CORE_TRACE("Initialized vulkan swap chain.");
 
     auto imageViews = new VulkanImageViews(swapchainObj);
+    ELMT_CORE_TRACE("Initialized vulkan image views.");
 
-    auto imageFormat = swapchainObj->getSwapChainImageFormat();
-    auto extent = swapchainObj->getswapChainExtent();
+    auto &imageFormat = swapchainObj->getSwapChainImageFormat();
+    auto &extent = swapchainObj->getswapChainExtent();
 
     auto renderPass = VulkanStandardRenderPass::getInstance();
     renderPass->init(imageFormat);

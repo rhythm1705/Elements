@@ -10,8 +10,8 @@
 namespace Elements {
 VulkanSwapChain::VulkanSwapChain() {
     auto vulkanDevice = VulkanDevice::getInstance();
-    auto physicalDevice = vulkanDevice->getVulkanPhysicalDevice();
-    auto logicalDevice = vulkanDevice->getVulkanDevice();
+    auto &physicalDevice = vulkanDevice->getVulkanPhysicalDevice();
+    auto &logicalDevice = vulkanDevice->getVulkanDevice();
 
     SwapChainSupportDetails swapChainSupport = vulkanDevice->querySwapChainSupport(physicalDevice);
 
@@ -25,7 +25,7 @@ VulkanSwapChain::VulkanSwapChain() {
         imageCount = swapChainSupport.capabilities.maxImageCount;
     }
 
-    auto surface = VulkanSurface::getInstance()->getVulkanSurface();
+    auto &surface = VulkanSurface::getInstance()->getVulkanSurface();
 
     vk::SwapchainCreateInfoKHR createInfo(vk::SwapchainCreateFlagsKHR(), surface, imageCount,
                                           surfaceFormat.format, surfaceFormat.colorSpace, extent, 1,
@@ -49,6 +49,7 @@ VulkanSwapChain::VulkanSwapChain() {
     createInfo.setCompositeAlpha(vk::CompositeAlphaFlagBitsKHR::eOpaque);
     createInfo.setPresentMode(presentMode);
     createInfo.setClipped(VK_TRUE);
+    createInfo.setOldSwapchain(nullptr);
 
     if (logicalDevice.createSwapchainKHR(&createInfo, nullptr, &swapChain) != vk::Result::eSuccess) {
         ELMT_CORE_ERROR("failed to create swap chain!");

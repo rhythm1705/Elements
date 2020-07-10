@@ -4,8 +4,8 @@
 
 namespace Elements {
 VulkanImageViews::VulkanImageViews(VulkanSwapChain *swapChain) {
-    auto swapChainImages = swapChain->getSwapChainImages();
-    auto swapChainImageFormat = swapChain->getSwapChainImageFormat();
+    auto &swapChainImages = swapChain->getSwapChainImages();
+    auto &swapChainImageFormat = swapChain->getSwapChainImageFormat();
     swapChainImageViews.resize(swapChainImages.size());
     for (size_t i = 0; i < swapChainImages.size(); i++) {
         vk::ImageViewCreateInfo createInfo(
