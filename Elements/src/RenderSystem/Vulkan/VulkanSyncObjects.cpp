@@ -5,14 +5,15 @@
 namespace Elements {
 
 VulkanSyncObjects::VulkanSyncObjects(uint32_t imageCount) : imageCount(imageCount) {
-    imageAvailableSemaphores.resize(imageCount);
-    renderFinishedSemaphores.resize(imageCount);
-    inFlightFences.resize(imageCount);
-    imagesInFlight.resize(imageCount);
+    ELMT_CORE_TRACE("No of swap chain images: {0}", imageCount);
+    imageAvailableSemaphores.resize(2);
+    renderFinishedSemaphores.resize(2);
+    inFlightFences.resize(2);
+    imagesInFlight.resize(imageCount, nullptr);
     vk::SemaphoreCreateInfo semaphoreInfo;
     vk::FenceCreateInfo fenceInfo(vk::FenceCreateFlagBits::eSignaled);
     auto &device = VulkanDevice::getInstance()->getVulkanDevice();
-    for (size_t i = 0; i < imageCount; i++) {
+    for (size_t i = 0; i < 2; i++) {
         if (device.createSemaphore(&semaphoreInfo, nullptr, &imageAvailableSemaphores[i]) != vk::Result::eSuccess
             || device.createSemaphore(&semaphoreInfo, nullptr, &renderFinishedSemaphores[i]) != vk::Result::eSuccess
             || device.createFence(&fenceInfo, nullptr, &inFlightFences[i]) != vk::Result::eSuccess) {

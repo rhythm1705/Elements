@@ -12,7 +12,7 @@ class VulkanInstance {
 
     void init(const std::string &appName, const int appVersion, const std::string &engineName, const int engineVersion);
 
-    vk::Instance getVulkanInstance() { return instance; };
+    vk::Instance &getVulkanInstance() { return instance; };
 
     void destroy();
 

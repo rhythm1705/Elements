@@ -25,8 +25,9 @@ VulkanCommandBuffers::VulkanCommandBuffers(vk::CommandPool commandPool,
             ELMT_CORE_ERROR("failed to begin recording command buffer!");
         }
         vk::ClearValue clearColor = vk::ClearColorValue(std::array<float, 4>{ 0.0f, 0.0f, 0.0f, 1.0f });
+        vk::Rect2D renderArea({ 0, 0 }, swapChainExtent);
         vk::RenderPassBeginInfo renderPassInfo(VulkanStandardRenderPass::getInstance()->getRenderPass(),
-                                               framebuffers[i], { 0, 0 }, 1, &clearColor);
+                                               framebuffers[i], renderArea, 1, &clearColor);
 
         commandBuffers[i].beginRenderPass(&renderPassInfo, vk::SubpassContents::eInline);
         commandBuffers[i].bindPipeline(vk::PipelineBindPoint::eGraphics, pipeline);
