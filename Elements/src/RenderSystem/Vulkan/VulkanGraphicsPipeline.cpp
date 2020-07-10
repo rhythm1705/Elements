@@ -63,6 +63,7 @@ VulkanGraphicsPipeline::VulkanGraphicsPipeline(const char *vertexShader,
         != vk::Result::eSuccess) {
         ELMT_CORE_ERROR("failed to create graphics pipeline!");
     }
+    VulkanShaderManager::getInstance()->cleanUpShaders();
 }
 
 VulkanGraphicsPipeline::~VulkanGraphicsPipeline() {

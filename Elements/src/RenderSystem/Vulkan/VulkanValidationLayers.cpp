@@ -13,7 +13,9 @@ VulkanValidationLayers::VulkanValidationLayers() {
     }
 }
 
-VulkanValidationLayers::~VulkanValidationLayers() {
+VulkanValidationLayers::~VulkanValidationLayers() {}
+
+void VulkanValidationLayers::destroyDebugMessenger() {
     VulkanInstance::getInstance()->getVulkanInstance().destroyDebugUtilsMessengerEXT(
       debugMessenger, nullptr, dispatcher);
 }

@@ -20,7 +20,40 @@ namespace Elements {
 
 void RenderSystem::startUp() { init(); }
 
-void RenderSystem::shutDown() { VulkanDevice::getInstance()->getVulkanDevice().waitIdle(); }
+void RenderSystem::shutDown() {
+    auto &device = VulkanDevice::getInstance()->getVulkanDevice();
+    device.waitIdle();
+    for (size_t i = 0; i < 2; i++) {
+        device.destroySemaphore(renderFinishedSemaphores[i], nullptr);
+        device.destroySemaphore(imageAvailableSemaphores[i], nullptr);
+        device.destroyFence(inFlightFences[i], nullptr);
+    }
+
+    device.destroyCommandPool(commandPool, nullptr);
+
+    for (auto framebuffer : framebuffers) {
+        device.destroyFramebuffer(framebuffer);
+    }
+
+    device.destroyPipeline(graphicsPipeline);
+    device.destroyPipelineLayout(pipelineLayout);
+    device.destroyRenderPass(VulkanStandardRenderPass::getInstance()->getRenderPass());
+
+    for (auto imageView : swapChainImageViews) {
+        device.destroyImageView(imageView);
+    }
+
+    device.destroySwapchainKHR(swapChain);
+    device.destroy();
+
+    if (enableValidationLayers) {
+        VulkanValidationLayers::destroyDebugMessenger();
+    }
+    auto instance = VulkanInstance::getInstance()->getVulkanInstance();
+    auto surface = VulkanSurface::getInstance()->getVulkanSurface();
+    instance.destroySurfaceKHR(surface);
+    instance.destroy();
+}
 
 void RenderSystem::onUpdate() {
     auto &device = VulkanDevice::getInstance()->getVulkanDevice();
@@ -86,7 +119,8 @@ void RenderSystem::init() {
     swapChain = swapchainObj->getSwapChain();
     ELMT_CORE_TRACE("Initialized vulkan swap chain.");
 
-    auto imageViews = new VulkanImageViews(swapchainObj);
+    auto imageViewsObj = new VulkanImageViews(swapchainObj);
+    swapChainImageViews = imageViewsObj->getSwapChainImageViews();
     ELMT_CORE_TRACE("Initialized vulkan image views.");
 
     auto &imageFormat = swapchainObj->getSwapChainImageFormat();
@@ -97,12 +131,16 @@ void RenderSystem::init() {
     ELMT_CORE_TRACE("Initialized vulkan render pass.");
 
     auto pipeline = new VulkanGraphicsPipeline("assets/shaders/vert.spv", "assets/shaders/frag.spv", extent);
+    graphicsPipeline = pipeline->getPipeline();
+    pipelineLayout = pipeline->getPipelineLayout();
 
-    auto framebuffers = new VulkanFramebuffers(imageViews, extent);
+    auto framebuffersObj = new VulkanFramebuffers(imageViewsObj, extent);
+    framebuffers = framebuffersObj->getFrameBuffers();
 
-    auto commandPool = new VulkanCommandPool(device->findQueueFamilies(device->getVulkanPhysicalDevice()));
-    auto commandBuffersObj = new VulkanCommandBuffers(
-      commandPool->getCommandPool(), framebuffers->getFrameBuffers(), extent, pipeline->getPipeline());
+    auto commandPoolObj
+      = new VulkanCommandPool(device->findQueueFamilies(device->getVulkanPhysicalDevice()));
+    commandPool = commandPoolObj->getCommandPool();
+    auto commandBuffersObj = new VulkanCommandBuffers(commandPool, framebuffers, extent, graphicsPipeline);
     commandBuffers = commandBuffersObj->getCommandBuffers();
 
     auto syncObject = new VulkanSyncObjects(swapchainObj->getSwapChainImages().size());

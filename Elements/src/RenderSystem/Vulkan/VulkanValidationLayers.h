@@ -17,6 +17,7 @@ class VulkanValidationLayers {
     ~VulkanValidationLayers();
 
     static void setupDebugMessenger();
+    static void destroyDebugMessenger();
     bool checkValidationLayersSupport();
     static void populateDebugMessengerCreateInfo(vk::DebugUtilsMessengerCreateInfoEXT &createInfo);
     static vk::DispatchLoaderDynamic &getDynamicDispatcher() { return dispatcher; }
