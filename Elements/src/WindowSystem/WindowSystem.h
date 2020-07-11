@@ -12,6 +12,7 @@ struct WindowProps {
     std::string title;
     unsigned int width;
     unsigned int height;
+    bool framebufferResized = false;
     std::function<void(Message *)> windowMessage;
 
     WindowProps(const std::string &title = "Elements Game Engine", unsigned int width = 1280, unsigned int height = 720)
@@ -34,6 +35,8 @@ class WindowSystem : public System {
 
     bool isRunning() { return running; }
     bool isMinimized() { return minimized; }
+    bool isFramebufferResized() { return data.framebufferResized; }
+    void setFramebufferResisze(bool value) { data.framebufferResized = value; }
 
   private:
     void init(const WindowProps &props = WindowProps());

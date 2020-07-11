@@ -14,6 +14,8 @@ class RenderSystem : public System {
 
   private:
     void init();
+    void recreateSwapChain();
+    void cleanUpSwapchain();
 
     size_t currentFrame = 0;
 
