@@ -1,0 +1,20 @@
+#include "VulkanAPI.h"
+
+#include "Queue/VulkanGraphicsQueue.h"
+#include "Queue/VulkanPresentQueue.h"
+#include "RenderPass/VulkanGUIRenderPass.h"
+#include "RenderPass/VulkanStandardRenderPass.h"
+#include "VulkanCommandBuffers.h"
+#include "VulkanCommandPool.h"
+#include "VulkanDevice.h"
+#include "VulkanFrameBuffers.h"
+#include "VulkanGraphicsPipeline.h"
+#include "VulkanImageView.h"
+#include "VulkanInstance.h"
+#include "VulkanShaderManager.h"
+#include "VulkanSurface.h"
+#include "VulkanSwapChain.h"
+#include "VulkanSyncObjects.h"
+#include "VulkanValidationLayers.h"
+
+namespace Elements {}

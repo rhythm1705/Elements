@@ -9,7 +9,7 @@ class VulkanSurface {
 
     void init();
 
-    vk::SurfaceKHR getVulkanSurface() { return surface; }
+    vk::SurfaceKHR &getVulkanSurface() { return surface; }
 
     void destroy();
 
