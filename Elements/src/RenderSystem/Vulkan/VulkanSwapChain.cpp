@@ -3,17 +3,14 @@
 #include "Core/Application.h"
 #include "RenderSystem/Vulkan/Queue/VulkanQueue.h"
 #include "RenderSystem/Vulkan/VulkanDevice.h"
-#include "RenderSystem/Vulkan/VulkanSurface.h"
 
 #include <GLFW/glfw3.h>
 
 namespace Elements {
-VulkanSwapChain::VulkanSwapChain() {
-    auto vulkanDevice = VulkanDevice::getInstance();
-    auto &physicalDevice = vulkanDevice->getVulkanPhysicalDevice();
-    auto &logicalDevice = vulkanDevice->getVulkanDevice();
+VulkanSwapchain::VulkanSwapchain(VulkanDevice &device, vk::SurfaceKHR surface) : device{ device } {
 
-    SwapChainSupportDetails swapChainSupport = vulkanDevice->querySwapChainSupport(physicalDevice);
+    SwapChainSupportDetails swapChainSupport
+      = device.querySwapChainSupport(device.getPhysicalDevice(), surface);
 
     vk::SurfaceFormatKHR surfaceFormat = chooseSwapSurfaceFormat(swapChainSupport.formats);
     vk::PresentModeKHR presentMode = chooseSwapPresentMode(swapChainSupport.presentModes);
@@ -25,13 +22,11 @@ VulkanSwapChain::VulkanSwapChain() {
         imageCount = swapChainSupport.capabilities.maxImageCount;
     }
 
-    auto &surface = VulkanSurface::getInstance()->getVulkanSurface();
-
     vk::SwapchainCreateInfoKHR createInfo(vk::SwapchainCreateFlagsKHR(), surface, imageCount,
                                           surfaceFormat.format, surfaceFormat.colorSpace, extent, 1,
                                           vk::ImageUsageFlagBits::eColorAttachment);
 
-    VulkanQueue::QueueFamilyIndices indices = vulkanDevice->findQueueFamilies(physicalDevice);
+    QueueFamilyIndices indices = device.getQueueFamilyIndices();
     uint32_t queueFamilyIndices[] = { indices.graphicsFamily.value(), indices.presentFamily.value() };
     if (indices.graphicsFamily != indices.presentFamily) {
         // Images can be used across multiple queue families without explicit ownership transfers.
@@ -51,21 +46,19 @@ VulkanSwapChain::VulkanSwapChain() {
     createInfo.setClipped(VK_TRUE);
     createInfo.setOldSwapchain(nullptr);
 
-    if (logicalDevice.createSwapchainKHR(&createInfo, nullptr, &swapChain) != vk::Result::eSuccess) {
+    if (device.getHandle().createSwapchainKHR(&createInfo, nullptr, &handle) != vk::Result::eSuccess) {
         ELMT_CORE_ERROR("failed to create swap chain!");
     }
 
-    swapChainImages = logicalDevice.getSwapchainImagesKHR(swapChain);
+    swapChainImages = device.getHandle().getSwapchainImagesKHR(handle);
     swapChainImageFormat = surfaceFormat.format;
     swapChainExtent = extent;
 }
 
-VulkanSwapChain::~VulkanSwapChain() {
-    VulkanDevice::getInstance()->getVulkanDevice().destroy(swapChain);
-}
+VulkanSwapchain::~VulkanSwapchain() { device.getHandle().destroy(handle); }
 
 vk::SurfaceFormatKHR
-VulkanSwapChain::chooseSwapSurfaceFormat(const std::vector<vk::SurfaceFormatKHR> &availableFormats) {
+VulkanSwapchain::chooseSwapSurfaceFormat(const std::vector<vk::SurfaceFormatKHR> &availableFormats) {
     for (const auto &availableFormat : availableFormats) {
         if (availableFormat.format == vk::Format::eB8G8R8A8Srgb
             && availableFormat.colorSpace == vk::ColorSpaceKHR::eSrgbNonlinear) {
@@ -76,7 +69,7 @@ VulkanSwapChain::chooseSwapSurfaceFormat(const std::vector<vk::SurfaceFormatKHR>
 }
 
 vk::PresentModeKHR
-VulkanSwapChain::chooseSwapPresentMode(const std::vector<vk::PresentModeKHR> &availablePresentModes) {
+VulkanSwapchain::chooseSwapPresentMode(const std::vector<vk::PresentModeKHR> &availablePresentModes) {
     for (const auto &availablePresentMode : availablePresentModes) {
         if (availablePresentMode == vk::PresentModeKHR::eMailbox) {
             return availablePresentMode;
@@ -85,7 +78,7 @@ VulkanSwapChain::chooseSwapPresentMode(const std::vector<vk::PresentModeKHR> &av
     return vk::PresentModeKHR::eFifo;
 }
 
-vk::Extent2D VulkanSwapChain::chooseSwapExtent(const vk::SurfaceCapabilitiesKHR &capabilities) {
+vk::Extent2D VulkanSwapchain::chooseSwapExtent(const vk::SurfaceCapabilitiesKHR &capabilities) {
     if (capabilities.currentExtent.width != UINT32_MAX) {
         return capabilities.currentExtent;
     } else {

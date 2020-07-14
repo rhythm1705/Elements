@@ -1,6 +1,5 @@
 #pragma once
 
-#include <GLFW/glfw3.h>
 #include <vulkan/vulkan.hpp>
 
 
@@ -8,23 +7,17 @@ namespace Elements {
 
 class VulkanInstance {
   public:
-    static VulkanInstance *getInstance();
+    VulkanInstance(const std::string &appName, const int appVersion, const std::string &engineName, const int engineVersion);
+    ~VulkanInstance();
 
-    void init(const std::string &appName, const int appVersion, const std::string &engineName, const int engineVersion);
-
-    vk::Instance &getVulkanInstance() { return instance; };
-
-    void destroy();
+    vk::Instance getHandle() { return handle; };
+    vk::SurfaceKHR getSurface() { return surface; };
 
   private:
-    VulkanInstance() = default;
-    ~VulkanInstance(){};
-
     std::vector<const char *> getRequiredExtensions();
 
-    static VulkanInstance *vulkanInstance;
-
-    vk::Instance instance;
+    vk::Instance handle;
+    vk::SurfaceKHR surface;
 };
 
 } // namespace Elements

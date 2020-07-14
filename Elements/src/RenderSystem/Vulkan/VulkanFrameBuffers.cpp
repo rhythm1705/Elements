@@ -5,8 +5,8 @@
 
 namespace Elements {
 
-VulkanFramebuffers::VulkanFramebuffers(VulkanImageViews *vulkanImageViews, vk::Extent2D extent) {
-    auto imageViews = vulkanImageViews->getSwapChainImageViews();
+VulkanFramebuffers::VulkanFramebuffers(VulkanImageView *vulkanImageViews, vk::Extent2D extent) {
+    auto imageViews = vulkanImageViews->getHandle();
     framebuffers.resize(imageViews.size());
     for (size_t i = 0; i < imageViews.size(); i++) {
         vk::ImageView attachments[] = { imageViews[i] };

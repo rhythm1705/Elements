@@ -1,31 +1,28 @@
 #include "VulkanDevice.h"
 
 #include "VulkanInstance.h"
-#include "VulkanSurface.h"
+#include "VulkanSwapChain.h"
 
 namespace Elements {
-VulkanDevice *VulkanDevice::vulkanDevice = nullptr;
 
-VulkanDevice *VulkanDevice::getInstance() {
-    if (!vulkanDevice) {
-        vulkanDevice = new VulkanDevice;
+VulkanDevice::VulkanDevice(vk::Instance instance, vk::SurfaceKHR surface) {
+    pickPhysicalDevice(instance, surface);
+    createLogicalDevice(surface);
+}
+
+VulkanDevice::~VulkanDevice() {
+    if (handle != VK_NULL_HANDLE) {
+        handle.destroy();
     }
-    return vulkanDevice;
 }
 
-void VulkanDevice::init() {
-    pickPhysicalDevice();
-    createLogicalDevice();
-}
-
-void VulkanDevice::pickPhysicalDevice() {
-    std::vector<vk::PhysicalDevice> devices
-      = VulkanInstance::getInstance()->getVulkanInstance().enumeratePhysicalDevices();
+void VulkanDevice::pickPhysicalDevice(vk::Instance instance, vk::SurfaceKHR surface) {
+    std::vector<vk::PhysicalDevice> devices = instance.enumeratePhysicalDevices();
     if (devices.empty()) {
         ELMT_CORE_ERROR("Failed to find GPUs with Vulkan support !");
     }
     for (const auto &device : devices) {
-        if (isDeviceSuitable(device)) {
+        if (isDeviceSuitable(device, surface)) {
             physicalDevice = device;
             break;
         }
@@ -35,8 +32,8 @@ void VulkanDevice::pickPhysicalDevice() {
     }
 }
 
-void VulkanDevice::createLogicalDevice() {
-    VulkanQueue::QueueFamilyIndices indices = findQueueFamilies(physicalDevice);
+void VulkanDevice::createLogicalDevice(vk::SurfaceKHR surface) {
+    QueueFamilyIndices indices = findQueueFamilies(physicalDevice, surface);
     std::vector<vk::DeviceQueueCreateInfo> queueCreateInfos;
     std::set<uint32_t> uniqueQueueFamilies
       = { indices.graphicsFamily.value(), indices.presentFamily.value() };
@@ -49,27 +46,26 @@ void VulkanDevice::createLogicalDevice() {
     vk::DeviceCreateInfo deviceCreateInfo(
       vk::DeviceCreateFlags(), static_cast<uint32_t>(queueCreateInfos.size()), queueCreateInfos.data(),
       0, nullptr, static_cast<uint32_t>(deviceExtensions.size()), deviceExtensions.data(), &deviceFeatures);
-    if (physicalDevice.createDevice(&deviceCreateInfo, nullptr, &logicalDevice) != vk::Result::eSuccess) {
+    if (physicalDevice.createDevice(&deviceCreateInfo, nullptr, &handle) != vk::Result::eSuccess) {
         ELMT_CORE_ERROR("Failed to create logical device!");
     }
 }
 
-bool VulkanDevice::isDeviceSuitable(vk::PhysicalDevice physicalDevice) {
-    VulkanQueue::QueueFamilyIndices indices = findQueueFamilies(physicalDevice);
+bool VulkanDevice::isDeviceSuitable(vk::PhysicalDevice physicalDevice, vk::SurfaceKHR surface) {
+    QueueFamilyIndices indices = findQueueFamilies(physicalDevice, surface);
     bool extensionsSupported = checkDeviceExtensionSupport(physicalDevice);
     bool swapChainAdequate = false;
     if (extensionsSupported) {
-        VulkanSwapChain::SwapChainSupportDetails swapChainSupport = querySwapChainSupport(physicalDevice);
+        SwapChainSupportDetails swapChainSupport = querySwapChainSupport(physicalDevice, surface);
         swapChainAdequate = !swapChainSupport.formats.empty() && !swapChainSupport.presentModes.empty();
     }
     return indices.isComplete() && extensionsSupported && swapChainAdequate;
 }
 
-VulkanQueue::QueueFamilyIndices VulkanDevice::findQueueFamilies(vk::PhysicalDevice physicalDevice) {
+QueueFamilyIndices VulkanDevice::findQueueFamilies(vk::PhysicalDevice physicalDevice, vk::SurfaceKHR surface) {
     std::vector<vk::QueueFamilyProperties> queueFamilies = physicalDevice.getQueueFamilyProperties();
-    VulkanQueue::QueueFamilyIndices indices;
+    QueueFamilyIndices indices;
     int i = 0;
-    auto surface = VulkanSurface::getInstance()->getVulkanSurface();
     for (const auto &queueFamily : queueFamilies) {
         if (queueFamily.queueFlags & vk::QueueFlagBits::eGraphics) {
             indices.graphicsFamily = i;
@@ -96,15 +92,13 @@ bool VulkanDevice::checkDeviceExtensionSupport(vk::PhysicalDevice physicalDevice
     return requiredExtensions.empty();
 }
 
-VulkanSwapChain::SwapChainSupportDetails VulkanDevice::querySwapChainSupport(vk::PhysicalDevice physicalDevice) {
-    VulkanSwapChain::SwapChainSupportDetails details;
-    auto surface = VulkanSurface::getInstance()->getVulkanSurface();
+SwapChainSupportDetails
+VulkanDevice::querySwapChainSupport(vk::PhysicalDevice physicalDevice, vk::SurfaceKHR surface) {
+    SwapChainSupportDetails details;
     details.capabilities = physicalDevice.getSurfaceCapabilitiesKHR(surface);
     details.formats = physicalDevice.getSurfaceFormatsKHR(surface);
     details.presentModes = physicalDevice.getSurfacePresentModesKHR(surface);
     return details;
 }
-
-void VulkanDevice::destroy() { logicalDevice.destroy(); }
 
 } // namespace Elements

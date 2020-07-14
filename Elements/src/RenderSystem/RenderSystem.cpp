@@ -110,12 +110,12 @@ void RenderSystem::recreateSwapChain() {
     device.waitIdle();
     cleanUpSwapchain();
 
-    auto swapchainObj = new VulkanSwapChain();
+    auto swapchainObj = new VulkanSwapchain();
     swapChain = swapchainObj->getSwapChain();
     ELMT_CORE_TRACE("Initialized vulkan swap chain.");
 
-    auto imageViewsObj = new VulkanImageViews(swapchainObj);
-    swapChainImageViews = imageViewsObj->getSwapChainImageViews();
+    auto imageViewsObj = new VulkanImageView(swapchainObj);
+    swapChainImageViews = imageViewsObj->getHandle();
     ELMT_CORE_TRACE("Initialized vulkan image views.");
 
     auto &imageFormat = swapchainObj->getSwapChainImageFormat();
@@ -186,12 +186,12 @@ void RenderSystem::init() {
     presentQueue = presentQueueObj->getQueue();
     ELMT_CORE_TRACE("Initialized vulkan present queue.");
 
-    auto swapchainObj = new VulkanSwapChain();
+    auto swapchainObj = new VulkanSwapchain();
     swapChain = swapchainObj->getSwapChain();
     ELMT_CORE_TRACE("Initialized vulkan swap chain.");
 
-    auto imageViewsObj = new VulkanImageViews(swapchainObj);
-    swapChainImageViews = imageViewsObj->getSwapChainImageViews();
+    auto imageViewsObj = new VulkanImageView(swapchainObj);
+    swapChainImageViews = imageViewsObj->getHandle();
     ELMT_CORE_TRACE("Initialized vulkan image views.");
 
     auto &imageFormat = swapchainObj->getSwapChainImageFormat();

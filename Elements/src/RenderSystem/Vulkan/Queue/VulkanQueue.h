@@ -3,19 +3,13 @@
 #include <vulkan/vulkan.hpp>
 
 namespace Elements {
+
 class VulkanQueue {
   public:
-    vk::Queue &getQueue() { return queue; };
-
-    struct QueueFamilyIndices {
-        std::optional<uint32_t> graphicsFamily;
-        std::optional<uint32_t> presentFamily;
-
-        bool isComplete() { return graphicsFamily.has_value() && presentFamily.has_value(); }
-    };
+    vk::Queue &getHandle() { return handle; };
 
   protected:
-    vk::Queue queue;
+    vk::Queue handle;
 };
 
 } // namespace Elements

@@ -4,12 +4,11 @@ namespace Elements {
 
 class VulkanInstance;
 class VulkanValidationLayers;
-class VulkanSurface;
 class VulkanDevice;
 class VulkanGraphicsQueue;
 class VulkanPresentQueue;
-class VulkanSwapChain;
-class VulkanImageViews;
+class VulkanSwapchain;
+class VulkanImageView;
 class VulkanStandardRenderPass;
 class VulkanGraphicsPipeline;
 class VulkanFramebuffers;
@@ -17,5 +16,21 @@ class VulkanCommandPool;
 class VulkanCommandBuffers;
 class VulkanSyncObjects;
 
-class VulkanAPI {};
-}
+class VulkanAPI {
+  public:
+    VulkanAPI();
+    ~VulkanAPI();
+
+    void drawFrame();
+    void recreateSwapChain();
+    void cleanUpSwapchain();
+
+  private:
+    std::unique_ptr<VulkanInstance> instance;
+    std::unique_ptr<VulkanDevice> device;
+    std::unique_ptr<VulkanSwapchain> swapChain;
+
+    vk::Queue graphicsQueue;
+    vk::Queue presentQueue;
+};
+} // namespace Elements

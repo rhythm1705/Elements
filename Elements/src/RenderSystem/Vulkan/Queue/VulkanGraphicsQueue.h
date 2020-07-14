@@ -3,17 +3,13 @@
 #include "VulkanQueue.h"
 
 namespace Elements {
+
+struct QueueFamilyIndices {};
+
 class VulkanGraphicsQueue : public VulkanQueue {
   public:
-    static VulkanGraphicsQueue *getInstance();
-
-    void init(const QueueFamilyIndices &queueFamilyIndices);
-
-  private:
-    VulkanGraphicsQueue() = default;
+    VulkanGraphicsQueue(vk::Device device, const QueueFamilyIndices &queueFamilyIndices);
     ~VulkanGraphicsQueue(){};
-
-    static VulkanGraphicsQueue *vulkanGraphicsQueue;
 };
 
 } // namespace Elements

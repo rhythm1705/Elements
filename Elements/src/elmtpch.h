@@ -12,6 +12,7 @@
 #include <functional>
 #include <iostream>
 #include <memory>
+#include <numeric>
 #include <optional>
 #include <queue>
 #include <set>

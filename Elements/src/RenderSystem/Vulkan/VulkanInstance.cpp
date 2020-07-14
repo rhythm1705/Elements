@@ -1,18 +1,16 @@
 #include "VulkanInstance.h"
 
+#include "Core/Application.h"
 #include "VulkanValidationLayers.h"
 
+#include <GLFW/glfw3.h>
+
 namespace Elements {
-VulkanInstance *VulkanInstance::vulkanInstance = nullptr;
 
-VulkanInstance *VulkanInstance::getInstance() {
-    if (!vulkanInstance) {
-        vulkanInstance = new VulkanInstance();
-    }
-    return vulkanInstance;
-}
-
-void VulkanInstance::init(const std::string &appName, const int appVersion, const std::string &engineName, const int engineVersion) {
+VulkanInstance::VulkanInstance(const std::string &appName,
+                               const int appVersion,
+                               const std::string &engineName,
+                               const int engineVersion) {
     vk::ApplicationInfo appInfo(appName.c_str(), appVersion, engineName.c_str(), engineVersion, VK_API_VERSION_1_2);
     auto extensions = getRequiredExtensions();
     vk::InstanceCreateInfo createInfo(vk::InstanceCreateFlags(), &appInfo, 0, {},
@@ -30,8 +28,20 @@ void VulkanInstance::init(const std::string &appName, const int appVersion, cons
         createInfo.setPNext(nullptr);
     }
 
-    if (vk::createInstance(&createInfo, nullptr, &instance) != vk::Result::eSuccess) {
+    if (vk::createInstance(&createInfo, nullptr, &handle) != vk::Result::eSuccess) {
         ELMT_CORE_ERROR("Failed to create vulkan instance!");
+    }
+
+    auto window = Application::get().getWindow().getWindowPtr();
+    if (glfwCreateWindowSurface(handle, window, nullptr, reinterpret_cast<VkSurfaceKHR *>(&surface)) != VK_SUCCESS) {
+        ELMT_CORE_ERROR("Failed to create vulkan window surface!");
+    }
+}
+
+VulkanInstance::~VulkanInstance() {
+    if (handle != VK_NULL_HANDLE) {
+        handle.destroySurfaceKHR(surface);
+        handle.destroy();
     }
 }
 
@@ -44,12 +54,6 @@ std::vector<const char *> VulkanInstance::getRequiredExtensions() {
         extensions.push_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
     }
     return extensions;
-}
-
-void VulkanInstance::destroy() {
-    instance.destroy();
-    /*delete vulkanInstance;
-    vulkanInstance = nullptr;*/
 }
 
 } // namespace Elements

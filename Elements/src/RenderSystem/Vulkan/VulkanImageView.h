@@ -4,16 +4,28 @@
 
 #include <vulkan/vulkan.hpp>
 
-namespace Elements {
-class VulkanImageViews {
-  public:
-    VulkanImageViews(VulkanSwapChain *swapChain);
-    ~VulkanImageViews();
 
-    std::vector<vk::ImageView> getSwapChainImageViews() { return swapChainImageViews; }
+namespace Elements {
+
+class VulkanDevice;
+class VulkanImage;
+
+class VulkanImageView {
+  public:
+    VulkanImageView(VulkanImage &image, vk::ImageViewType viewType, vk::Format format = vk::Format::eUndefined);
+    ~VulkanImageView();
+
+    vk::ImageView getHandle() const { return handle; }
+
+    void setImage(VulkanImage &image);
 
   private:
-    std::vector<vk::ImageView> swapChainImageViews;
+    vk::ImageView handle;
+
+    VulkanDevice &device;
+
+    VulkanImage *image{};
+    vk::Format format;
 };
 
 } // namespace Elements
