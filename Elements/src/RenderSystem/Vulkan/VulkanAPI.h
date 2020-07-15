@@ -11,7 +11,7 @@ class VulkanSwapchain;
 class VulkanImageView;
 class VulkanStandardRenderPass;
 class VulkanGraphicsPipeline;
-class VulkanFramebuffers;
+class VulkanFramebuffer;
 class VulkanCommandPool;
 class VulkanCommandBuffers;
 class VulkanSyncObjects;

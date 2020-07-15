@@ -4,6 +4,10 @@
 
 namespace Elements {
 
+class VulkanDevice;
+class VulkanImage;
+class VulkanImageView;
+
 struct Attachment {
     vk::Format format{ vk::Format::eUndefined };
     vk::SampleCountFlagBits samples{ vk::SampleCountFlagBits::e1 };
@@ -14,5 +18,25 @@ struct Attachment {
     Attachment(vk::Format format, vk::SampleCountFlagBits samples, vk::ImageUsageFlags usage);
 };
 
-class VulkanRenderTarget {};
+class VulkanRenderTarget {
+  public:
+    static const std::unique_ptr<VulkanRenderTarget> createRenderTarget(VulkanImage &&image);
+
+    VulkanRenderTarget(std::vector<VulkanImage> &&images);
+    //~VulkanRenderTarget();
+
+    const vk::Extent2D &getExtent() const { return extent; };
+    const std::vector<VulkanImageView> &getImageViews() const { return imageViews; };
+    const std::vector<Attachment> &getAttachments() const { return attachments; };
+
+  private:
+    VulkanDevice &device;
+
+    vk::Extent2D extent;
+
+    std::vector<VulkanImage> images;
+    std::vector<VulkanImageView> imageViews;
+    std::vector<Attachment> attachments;
+};
+
 } // namespace Elements

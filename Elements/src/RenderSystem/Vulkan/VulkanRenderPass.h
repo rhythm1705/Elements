@@ -25,7 +25,7 @@ class VulkanRenderPass {
                      const std::vector<SubpassInfo> &subpasses);
     ~VulkanRenderPass();
 
-    vk::RenderPass getHanlde() const { return handle; }
+    vk::RenderPass getHandle() const { return handle; }
 
   private:
     vk::RenderPass handle;

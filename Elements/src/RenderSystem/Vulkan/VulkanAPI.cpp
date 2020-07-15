@@ -53,7 +53,7 @@ VulkanAPI::VulkanAPI() {
     graphicsPipeline = pipeline->getPipeline();
     pipelineLayout = pipeline->getPipelineLayout();
 
-    auto framebuffersObj = new VulkanFramebuffers(imageViewsObj, extent);
+    auto framebuffersObj = new VulkanFramebuffer(imageViewsObj, extent);
     framebuffers = framebuffersObj->getFrameBuffers();
 
     auto commandPoolObj

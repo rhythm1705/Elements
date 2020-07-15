@@ -130,7 +130,7 @@ void RenderSystem::recreateSwapChain() {
     pipelineLayout = pipeline->getPipelineLayout();
     ELMT_CORE_TRACE("Initialized vulkan graphics pipeline.");
 
-    auto framebuffersObj = new VulkanFramebuffers(imageViewsObj, extent);
+    auto framebuffersObj = new VulkanFramebuffer(imageViewsObj, extent);
     framebuffers = framebuffersObj->getFrameBuffers();
     ELMT_CORE_TRACE("Initialized vulkan framebuffers.");
 
@@ -205,7 +205,7 @@ void RenderSystem::init() {
     graphicsPipeline = pipeline->getPipeline();
     pipelineLayout = pipeline->getPipelineLayout();
 
-    auto framebuffersObj = new VulkanFramebuffers(imageViewsObj, extent);
+    auto framebuffersObj = new VulkanFramebuffer(imageViewsObj, extent);
     framebuffers = framebuffersObj->getFrameBuffers();
 
     auto commandPoolObj

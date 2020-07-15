@@ -1,18 +1,20 @@
 #include "VulkanCommandPool.h"
 
+#include "VulkanDevice.h"
+#include "VulkanRenderFrame.h"
+#include "VulkanRenderTarget.h"
+
 namespace Elements {
 
-VulkanCommandPool::VulkanCommandPool(VulkanQueue::QueueFamilyIndices queueFamilyIndices) {
+VulkanCommandPool::VulkanCommandPool(VulkanDevice &d, QueueFamilyIndices queueFamilyIndices, VulkanRenderFrame *renderFrame)
+: device{ device }, renderFrame{ renderFrame } {
     vk::CommandPoolCreateInfo poolInfo(
       vk::CommandPoolCreateFlags(), queueFamilyIndices.graphicsFamily.value());
-    if (VulkanDevice::getInstance()->getVulkanDevice().createCommandPool(&poolInfo, nullptr, &commandPool)
-        != vk::Result::eSuccess) {
+    if (device.getHandle().createCommandPool(&poolInfo, nullptr, &handle) != vk::Result::eSuccess) {
         throw std::runtime_error("failed to create command pool!");
     }
 }
 
-VulkanCommandPool::~VulkanCommandPool() {
-    VulkanDevice::getInstance()->getVulkanDevice().destroyCommandPool(commandPool);
-}
+VulkanCommandPool::~VulkanCommandPool() { device.getHandle().destroyCommandPool(handle); }
 
 } // namespace Elements
