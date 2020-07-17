@@ -16,6 +16,8 @@ class VulkanCommandPool {
 
     vk::CommandPool getHandle() { return handle; }
 
+    VulkanDevice &getDevice() { return device; }
+
   private:
     VulkanDevice &device;
 

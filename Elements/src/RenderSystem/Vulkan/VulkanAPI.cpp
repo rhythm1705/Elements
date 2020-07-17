@@ -59,7 +59,7 @@ VulkanAPI::VulkanAPI() {
     auto commandPoolObj
       = new VulkanCommandPool(device->findQueueFamilies(device->getVulkanPhysicalDevice()));
     commandPool = commandPoolObj->getCommandPool();
-    auto commandBuffersObj = new VulkanCommandBuffers(commandPool, framebuffers, extent, graphicsPipeline);
+    auto commandBuffersObj = new VulkanCommandBuffer(commandPool, framebuffers, extent, graphicsPipeline);
     commandBuffers = commandBuffersObj->getCommandBuffers();
 
     auto syncObject = new VulkanSyncObjects(swapchainObj->getSwapChainImages().size());

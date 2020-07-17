@@ -33,7 +33,6 @@ class VulkanRenderTarget {
     VulkanDevice &device;
 
     vk::Extent2D extent;
-
     std::vector<VulkanImage> images;
     std::vector<VulkanImageView> imageViews;
     std::vector<Attachment> attachments;

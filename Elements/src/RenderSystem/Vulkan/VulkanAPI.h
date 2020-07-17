@@ -13,7 +13,7 @@ class VulkanStandardRenderPass;
 class VulkanGraphicsPipeline;
 class VulkanFramebuffer;
 class VulkanCommandPool;
-class VulkanCommandBuffers;
+class VulkanCommandBuffer;
 class VulkanSyncObjects;
 
 class VulkanAPI {

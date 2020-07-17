@@ -134,7 +134,7 @@ void RenderSystem::recreateSwapChain() {
     framebuffers = framebuffersObj->getFrameBuffers();
     ELMT_CORE_TRACE("Initialized vulkan framebuffers.");
 
-    auto commandBuffersObj = new VulkanCommandBuffers(commandPool, framebuffers, extent, graphicsPipeline);
+    auto commandBuffersObj = new VulkanCommandBuffer(commandPool, framebuffers, extent, graphicsPipeline);
     commandBuffers = commandBuffersObj->getCommandBuffers();
 }
 
@@ -211,7 +211,7 @@ void RenderSystem::init() {
     auto commandPoolObj
       = new VulkanCommandPool(device->findQueueFamilies(device->getVulkanPhysicalDevice()));
     commandPool = commandPoolObj->getCommandPool();
-    auto commandBuffersObj = new VulkanCommandBuffers(commandPool, framebuffers, extent, graphicsPipeline);
+    auto commandBuffersObj = new VulkanCommandBuffer(commandPool, framebuffers, extent, graphicsPipeline);
     commandBuffers = commandBuffersObj->getCommandBuffers();
 
     auto syncObject = new VulkanSyncObjects(swapchainObj->getSwapChainImages().size());
