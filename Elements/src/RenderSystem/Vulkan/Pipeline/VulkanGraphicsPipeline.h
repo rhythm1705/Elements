@@ -3,16 +3,21 @@
 #include <vulkan/vulkan.hpp>
 
 namespace Elements {
+
+class VulkanDevice;
+
 class VulkanGraphicsPipeline {
   public:
-    VulkanGraphicsPipeline(const char *vertexShader, const char *fragmentShader, const vk::Extent2D &swapChainExtent);
+    VulkanGraphicsPipeline(VulkanDevice &device, const char *vertexShader, const char *fragmentShader, const vk::Extent2D &swapChainExtent);
     ~VulkanGraphicsPipeline();
 
     vk::Pipeline getPipeline();
     vk::PipelineLayout getPipelineLayout();
 
   private:
-    vk::Pipeline pipeline;
+    VulkanDevice &device;
+
+    vk::Pipeline handle;
     vk::PipelineLayout pipelineLayout;
 };
 

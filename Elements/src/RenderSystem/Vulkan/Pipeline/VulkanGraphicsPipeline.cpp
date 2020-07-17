@@ -59,7 +59,7 @@ VulkanGraphicsPipeline::VulkanGraphicsPipeline(const char *vertexShader,
       &viewportState, &rasterizer, &multisampling, nullptr, &colorBlending, nullptr, pipelineLayout,
       VulkanStandardRenderPass::getInstance()->getRenderPass(), 0, nullptr, -1);
     if (VulkanDevice::getInstance()->getVulkanDevice().createGraphicsPipelines(
-          nullptr, 1, &pipelineInfo, nullptr, &pipeline)
+          nullptr, 1, &pipelineInfo, nullptr, &handle)
         != vk::Result::eSuccess) {
         ELMT_CORE_ERROR("failed to create graphics pipeline!");
     }
@@ -67,11 +67,11 @@ VulkanGraphicsPipeline::VulkanGraphicsPipeline(const char *vertexShader,
 }
 
 VulkanGraphicsPipeline::~VulkanGraphicsPipeline() {
-    VulkanDevice::getInstance()->getVulkanDevice().destroyPipeline(pipeline);
+    VulkanDevice::getInstance()->getVulkanDevice().destroyPipeline(handle);
     VulkanDevice::getInstance()->getVulkanDevice().destroyPipelineLayout(pipelineLayout);
 }
 
-vk::Pipeline VulkanGraphicsPipeline::getPipeline() { return pipeline; }
+vk::Pipeline VulkanGraphicsPipeline::getPipeline() { return handle; }
 
 vk::PipelineLayout VulkanGraphicsPipeline::getPipelineLayout() { return pipelineLayout; }
 } // namespace Elements
