@@ -1,2 +1,3 @@
-#include "elmtpch.h"
 #include "VulkanPipelineLayout.h"
+
+namespace Elements {}
