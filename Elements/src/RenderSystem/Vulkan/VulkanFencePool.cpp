@@ -4,7 +4,8 @@
 
 namespace Elements {
 
-VulkanFencePool::VulkanFencePool(VulkanDevice &device) : device{ device } {}
+VulkanFencePool::VulkanFencePool(VulkanDevice &device) : device{ device } {
+}
 
 VulkanFencePool::~VulkanFencePool() {
     wait();
@@ -25,7 +26,7 @@ vk::Fence VulkanFencePool::requestFence() {
     vk::Fence fence;
     vk::FenceCreateInfo createInfo;
     if (device.getHandle().createFence(&createInfo, nullptr, &fence) != vk::Result::eSuccess) {
-        throw std::runtime_error("Failed to create fence.");
+        ELMT_CORE_ERROR("Failed to create fence.");
     }
     fences.push_back(fence);
     activeFenceCount++;

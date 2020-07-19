@@ -5,20 +5,22 @@
 namespace Elements {
 
 class VulkanDevice;
+class VulkanPipelineState;
 
 class VulkanGraphicsPipeline {
   public:
-    VulkanGraphicsPipeline(VulkanDevice &device, const char *vertexShader, const char *fragmentShader, const vk::Extent2D &swapChainExtent);
+    VulkanGraphicsPipeline(VulkanDevice &device, VulkanPipelineState &pipelineState);
     ~VulkanGraphicsPipeline();
 
-    vk::Pipeline getPipeline();
-    vk::PipelineLayout getPipelineLayout();
+    vk::Pipeline getHandle();
+    VulkanPipelineState getPipelineState();
 
   private:
     VulkanDevice &device;
 
     vk::Pipeline handle;
-    vk::PipelineLayout pipelineLayout;
+
+    VulkanPipelineState pipelineState;
 };
 
 } // namespace Elements

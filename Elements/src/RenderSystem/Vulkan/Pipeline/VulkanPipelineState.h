@@ -22,19 +22,21 @@ struct RasterizationState {
     vk::Bool32 rasterizerDiscardEnable{ VK_FALSE };
     vk::PolygonMode polygonMode{ vk::PolygonMode::eFill };
     vk::CullModeFlags cullMode{ vk::CullModeFlagBits::eBack };
-    vk::FrontFace frontFace{ vk::FrontFace::eCounterClockwise };
+    vk::FrontFace frontFace{ vk::FrontFace::eClockwise };
     vk::Bool32 depthBiasEnable{ VK_FALSE };
 };
 
 struct ViewportState {
     uint32_t viewportCount{ 1 };
     uint32_t scissorCount{ 1 };
+    vk::Viewport viewport;
+    vk::Rect2D scissors;
 };
 
 struct MultisampleState {
     vk::SampleCountFlagBits rasterizationSamples{ vk::SampleCountFlagBits::e1 };
     vk::Bool32 sampleShadingEnable{ VK_FALSE };
-    float minSampleShading{ 0.0f };
+    float minSampleShading{ 1.0f };
     vk::SampleMask sampleMask{ 0 };
     vk::Bool32 alphaToCoverageEnable{ VK_FALSE };
     vk::Bool32 alphaToOneEnable{ VK_FALSE };
@@ -93,16 +95,16 @@ class VulkanPipelineState {
     void setColorBlendState(const ColorBlendState &colorBlendState);
 
     // Getters
-    VulkanPipelineLayout &getPipelineLayout() const;
-    VulkanRenderPass *getRenderPass() const;
-    VertexInputState &getVertexInputState() const;
-    InputAssemblyState &getInputAssemblyState() const;
-    RasterizationState &getRasterizationState() const;
-    ViewportState &getViewportState() const;
-    MultisampleState &getMultisampleState() const;
-    StencilOpState &getStencilOpState() const;
-    DepthStencilState &getDepthStenciState() const;
-    ColorBlendState &getColorBlendState() const;
+    const VulkanPipelineLayout &getPipelineLayout() const;
+    const VulkanRenderPass *getRenderPass() const;
+    const VertexInputState &getVertexInputState() const;
+    const InputAssemblyState &getInputAssemblyState() const;
+    const RasterizationState &getRasterizationState() const;
+    const ViewportState &getViewportState() const;
+    const MultisampleState &getMultisampleState() const;
+    const StencilOpState &getStencilOpState() const;
+    const DepthStencilState &getDepthStenciState() const;
+    const ColorBlendState &getColorBlendState() const;
 
   private:
     VulkanPipelineLayout *pipelineLayout;

@@ -181,44 +181,44 @@ void VulkanPipelineState::setColorBlendState(const ColorBlendState &newColorBlen
     }
 }
 
-VulkanPipelineLayout &VulkanPipelineState::getPipelineLayout() const {
+const VulkanPipelineLayout &VulkanPipelineState::getPipelineLayout() const {
     return *pipelineLayout;
 }
 
-VulkanRenderPass *VulkanPipelineState::getRenderPass() const {
-    return nullptr;
+const VulkanRenderPass *VulkanPipelineState::getRenderPass() const {
+    return renderPass;
 }
 
-VertexInputState &VulkanPipelineState::getVertexInputState() const {
-    // TODO: insert return statement here
+const VertexInputState &VulkanPipelineState::getVertexInputState() const {
+    return vertexInputState;
 }
 
-InputAssemblyState &VulkanPipelineState::getInputAssemblyState() const {
-    // TODO: insert return statement here
+const InputAssemblyState &VulkanPipelineState::getInputAssemblyState() const {
+    return inputAssemblyState;
 }
 
-RasterizationState &VulkanPipelineState::getRasterizationState() const {
-    // TODO: insert return statement here
+const RasterizationState &VulkanPipelineState::getRasterizationState() const {
+    return rasterizationState;
 }
 
-ViewportState &VulkanPipelineState::getViewportState() const {
-    // TODO: insert return statement here
+const ViewportState &VulkanPipelineState::getViewportState() const {
+    return viewportState;
 }
 
-MultisampleState &VulkanPipelineState::getMultisampleState() const {
-    // TODO: insert return statement here
+const MultisampleState &VulkanPipelineState::getMultisampleState() const {
+    return multisampleState;
 }
 
-StencilOpState &VulkanPipelineState::getStencilOpState() const {
-    // TODO: insert return statement here
+const StencilOpState &VulkanPipelineState::getStencilOpState() const {
+    return stencilOpState;
 }
 
-DepthStencilState &VulkanPipelineState::getDepthStenciState() const {
-    // TODO: insert return statement here
+const DepthStencilState &VulkanPipelineState::getDepthStenciState() const {
+    return depthStencilState;
 }
 
-ColorBlendState &VulkanPipelineState::getColorBlendState() const {
-    // TODO: insert return statement here
+const ColorBlendState &VulkanPipelineState::getColorBlendState() const {
+    return colorBlendState;
 }
 
 } // namespace Elements
