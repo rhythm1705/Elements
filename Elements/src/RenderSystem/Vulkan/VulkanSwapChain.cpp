@@ -1,8 +1,8 @@
 #include "VulkanSwapChain.h"
 
 #include "Core/Application.h"
-#include "RenderSystem/Vulkan/Queue/VulkanQueue.h"
 #include "RenderSystem/Vulkan/VulkanDevice.h"
+#include "VulkanQueue.h"
 
 #include <GLFW/glfw3.h>
 
@@ -22,8 +22,13 @@ VulkanSwapchain::VulkanSwapchain(VulkanDevice &device, vk::SurfaceKHR surface) :
         imageCount = swapChainSupport.capabilities.maxImageCount;
     }
 
-    vk::SwapchainCreateInfoKHR createInfo(vk::SwapchainCreateFlagsKHR(), surface, imageCount,
-                                          surfaceFormat.format, surfaceFormat.colorSpace, extent, 1,
+    vk::SwapchainCreateInfoKHR createInfo(vk::SwapchainCreateFlagsKHR(),
+                                          surface,
+                                          imageCount,
+                                          surfaceFormat.format,
+                                          surfaceFormat.colorSpace,
+                                          extent,
+                                          1,
                                           vk::ImageUsageFlagBits::eColorAttachment);
 
     QueueFamilyIndices indices = device.getQueueFamilyIndices();
@@ -55,7 +60,9 @@ VulkanSwapchain::VulkanSwapchain(VulkanDevice &device, vk::SurfaceKHR surface) :
     swapChainExtent = extent;
 }
 
-VulkanSwapchain::~VulkanSwapchain() { device.getHandle().destroy(handle); }
+VulkanSwapchain::~VulkanSwapchain() {
+    device.getHandle().destroy(handle);
+}
 
 vk::SurfaceFormatKHR
 VulkanSwapchain::chooseSwapSurfaceFormat(const std::vector<vk::SurfaceFormatKHR> &availableFormats) {

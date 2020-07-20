@@ -15,7 +15,7 @@ class VulkanCommandBuffer {
     VulkanCommandBuffer(VulkanCommandPool commandPool);
     ~VulkanCommandBuffer();
 
-    vk::CommandBuffer getCommandBuffer() { return handle; };
+    const vk::CommandBuffer getCommandBuffer() const { return handle; };
 
     vk::Result begin();
     void end();
