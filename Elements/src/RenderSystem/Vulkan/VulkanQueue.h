@@ -4,7 +4,7 @@
 
 namespace Elements {
 
-class VulkanDevice device;
+class VulkanDevice;
 class VulkanCommandBuffer;
 
 class VulkanQueue {

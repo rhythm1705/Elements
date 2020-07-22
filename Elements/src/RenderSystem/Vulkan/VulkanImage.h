@@ -8,7 +8,7 @@ class VulkanDevice;
 
 class VulkanImage {
   public:
-    VulkanImage(VulkanDevice &device, vk::Image handle, const vk::Extent2D &extent, vk::Format format, vk::ImageUsageFlags imageUsage);
+    VulkanImage(VulkanDevice &device, vk::Image handle, const vk::Extent2D &extent, vk::Format format);
     ~VulkanImage();
 
     vk::Image getHandle() const { return handle; };
@@ -23,7 +23,7 @@ class VulkanImage {
 
     vk::Extent2D extent;
     vk::Format format;
-    vk::ImageUsageFlags imageUsage;
+    //vk::ImageUsageFlags imageUsage;
 };
 
 } // namespace Elements

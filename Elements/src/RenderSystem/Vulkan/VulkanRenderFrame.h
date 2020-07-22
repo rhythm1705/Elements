@@ -9,6 +9,7 @@ class VulkanFencePool;
 class VulkanSemaphorePool;
 class VulkanRenderTarget;
 class VulkanCommandPool;
+class VulkanCommandBuffer;
 
 class VulkanRenderFrame {
   public:
@@ -25,12 +26,15 @@ class VulkanRenderFrame {
 
     void updateRenderTarget(std::unique_ptr<VulkanRenderTarget> &&renderTarget);
 
+    VulkanCommandBuffer &getCommandBufer();
+
     vk::Fence requestFence();
     vk::Semaphore requestSemaphore();
 
   private:
     VulkanDevice &device;
 
+    std::unique_ptr<VulkanCommandPool> commandPool;
     VulkanFencePool fencePool;
     VulkanSemaphorePool semaphorePool;
 

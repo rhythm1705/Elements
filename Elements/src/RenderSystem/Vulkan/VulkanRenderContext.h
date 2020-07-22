@@ -93,11 +93,13 @@ class VulkanRenderContext {
 
     VulkanSwapchain &getSwapchain();
 
-    vk::Extent2D getSurface_extent() const;
+    vk::Extent2D getSurfaceExtent() const;
 
     uint32_t getActiveFrameIndex() const;
 
     std::vector<std::unique_ptr<VulkanRenderFrame>> &getRenderFrames();
+
+    void handleSurfaceChanges();
 
   private:
     VulkanDevice &device;

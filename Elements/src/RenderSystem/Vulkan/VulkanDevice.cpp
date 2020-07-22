@@ -1,6 +1,8 @@
 #include "VulkanDevice.h"
 
+#include "VulkanFrameBuffer.h"
 #include "VulkanInstance.h"
+#include "VulkanQueue.h"
 #include "VulkanSwapChain.h"
 
 namespace Elements {
@@ -8,6 +10,8 @@ namespace Elements {
 VulkanDevice::VulkanDevice(vk::Instance instance, vk::SurfaceKHR surface) {
     pickPhysicalDevice(instance, surface);
     createLogicalDevice(surface);
+    queues.emplace_back(*this, queueFamilyIndices.graphicsFamily.has_value(), false);
+    queues.emplace_back(*this, queueFamilyIndices.presentFamily.has_value(), true);
 }
 
 VulkanDevice::~VulkanDevice() {
@@ -43,23 +47,28 @@ void VulkanDevice::createLogicalDevice(vk::SurfaceKHR surface) {
         queueCreateInfos.push_back(queueCreateInfo);
     }
     vk::PhysicalDeviceFeatures deviceFeatures{};
-    vk::DeviceCreateInfo deviceCreateInfo(
-      vk::DeviceCreateFlags(), static_cast<uint32_t>(queueCreateInfos.size()), queueCreateInfos.data(),
-      0, nullptr, static_cast<uint32_t>(deviceExtensions.size()), deviceExtensions.data(), &deviceFeatures);
+    vk::DeviceCreateInfo deviceCreateInfo(vk::DeviceCreateFlags(),
+                                          static_cast<uint32_t>(queueCreateInfos.size()),
+                                          queueCreateInfos.data(),
+                                          0,
+                                          nullptr,
+                                          static_cast<uint32_t>(deviceExtensions.size()),
+                                          deviceExtensions.data(),
+                                          &deviceFeatures);
     if (physicalDevice.createDevice(&deviceCreateInfo, nullptr, &handle) != vk::Result::eSuccess) {
         ELMT_CORE_ERROR("Failed to create logical device!");
     }
 }
 
 bool VulkanDevice::isDeviceSuitable(vk::PhysicalDevice physicalDevice, vk::SurfaceKHR surface) {
-    QueueFamilyIndices indices = findQueueFamilies(physicalDevice, surface);
+    queueFamilyIndices = findQueueFamilies(physicalDevice, surface);
     bool extensionsSupported = checkDeviceExtensionSupport(physicalDevice);
     bool swapChainAdequate = false;
     if (extensionsSupported) {
         SwapChainSupportDetails swapChainSupport = querySwapChainSupport(physicalDevice, surface);
         swapChainAdequate = !swapChainSupport.formats.empty() && !swapChainSupport.presentModes.empty();
     }
-    return indices.isComplete() && extensionsSupported && swapChainAdequate;
+    return queueFamilyIndices.isComplete() && extensionsSupported && swapChainAdequate;
 }
 
 QueueFamilyIndices VulkanDevice::findQueueFamilies(vk::PhysicalDevice physicalDevice, vk::SurfaceKHR surface) {
@@ -90,6 +99,10 @@ bool VulkanDevice::checkDeviceExtensionSupport(vk::PhysicalDevice physicalDevice
         requiredExtensions.erase(std::string(extension.extensionName));
     }
     return requiredExtensions.empty();
+}
+
+void VulkanDevice::clearFramebuffers() {
+    framebuffers.clear();
 }
 
 SwapChainSupportDetails

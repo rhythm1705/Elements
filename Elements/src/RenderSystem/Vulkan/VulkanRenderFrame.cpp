@@ -1,5 +1,6 @@
 #include "VulkanRenderFrame.h"
 
+#include "VulkanCommandBuffers.h"
 #include "VulkanCommandPool.h"
 #include "VulkanDevice.h"
 #include "VulkanFencePool.h"
@@ -39,6 +40,10 @@ const VulkanRenderTarget &VulkanRenderFrame::getRenderTarget() const {
 
 void VulkanRenderFrame::updateRenderTarget(std::unique_ptr<VulkanRenderTarget> &&newRenderTarget) {
     renderTarget = std::move(newRenderTarget);
+}
+
+VulkanCommandBuffer &VulkanRenderFrame::getCommandBufer() {
+    commandPool->requestCommandBuffer();
 }
 
 vk::Fence VulkanRenderFrame::requestFence() {
