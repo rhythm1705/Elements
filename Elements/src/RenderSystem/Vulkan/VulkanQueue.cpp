@@ -39,8 +39,8 @@ void VulkanQueue::submit(const VulkanCommandBuffer &commandBuffer, vk::Fence fen
     submit({ submitInfo }, fence);
 }
 
-void VulkanQueue::present(const vk::PresentInfoKHR &presentInfo) const {
-    handle.presentKHR(presentInfo);
+vk::Result VulkanQueue::present(const vk::PresentInfoKHR &presentInfo) const {
+    return handle.presentKHR(presentInfo);
 }
 
 void VulkanQueue::waitIdle() const {

@@ -20,7 +20,7 @@ class VulkanQueue {
 
     void submit(const std::vector<vk::SubmitInfo> &submitInfos, vk::Fence fence) const;
     void submit(const VulkanCommandBuffer &commandBuffer, vk::Fence fence) const;
-    void present(const vk::PresentInfoKHR &presentInfo) const;
+    vk::Result present(const vk::PresentInfoKHR &presentInfo) const;
     void waitIdle() const;
 
   private:

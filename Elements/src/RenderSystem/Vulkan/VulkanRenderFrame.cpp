@@ -43,7 +43,7 @@ void VulkanRenderFrame::updateRenderTarget(std::unique_ptr<VulkanRenderTarget> &
 }
 
 VulkanCommandBuffer &VulkanRenderFrame::getCommandBufer() {
-    commandPool->requestCommandBuffer();
+    commandPool->getCommandBuffer();
 }
 
 vk::Fence VulkanRenderFrame::requestFence() {

@@ -24,7 +24,7 @@ VulkanDevice &VulkanRenderContext::getDevice() {
 }
 
 vk::Format VulkanRenderContext::getFormat() {
-    return vk::Format();
+    return swapchain->getSwapChainImageFormat();
 }
 
 VulkanSwapchain &VulkanRenderContext::getSwapchain() {
@@ -32,11 +32,11 @@ VulkanSwapchain &VulkanRenderContext::getSwapchain() {
 }
 
 vk::Extent2D VulkanRenderContext::getSurfaceExtent() const {
-    return vk::Extent2D();
+    return surfaceExtent;
 }
 
 uint32_t VulkanRenderContext::getActiveFrameIndex() const {
-    return uint32_t();
+    return activeFrameIndex;
 }
 
 std::vector<std::unique_ptr<VulkanRenderFrame>> &VulkanRenderContext::getRenderFrames() {
@@ -44,6 +44,14 @@ std::vector<std::unique_ptr<VulkanRenderFrame>> &VulkanRenderContext::getRenderF
 }
 
 void VulkanRenderContext::handleSurfaceChanges() {
+    vk::SurfaceCapabilitiesKHR surfaceCapabilities
+      = device.getPhysicalDevice().getSurfaceCapabilitiesKHR(swapchain->getSurface());
+    if (surfaceCapabilities.currentExtent.width != surfaceExtent.width
+        || surfaceCapabilities.currentExtent.height != surfaceExtent.height) {
+        device.getHandle().waitIdle();
+        updateSwapchain(surfaceCapabilities.currentExtent);
+        surfaceExtent = surfaceCapabilities.currentExtent;
+    }
 }
 
 void VulkanRenderContext::requestPresentMode(const vk::PresentModeKHR presentMode) {
@@ -72,6 +80,8 @@ void VulkanRenderContext::prepare() {
 }
 
 void VulkanRenderContext::updateSwapchain(const vk::Extent2D &extent) {
+    device.clearFramebuffers();
+    swapchain = std::make_unique<VulkanSwapchain>(device, swapchain->getSurface());
 }
 
 void VulkanRenderContext::updateSwapchain(const uint32_t imageCount) {
@@ -128,34 +138,77 @@ VulkanCommandBuffer &VulkanRenderContext::begin() {
 }
 
 void VulkanRenderContext::submit(VulkanCommandBuffer &commandBuffer) {
+    vk::Semaphore renderSemaphore
+      = submit(queue, commandBuffer, acquiredSemaphore, vk::PipelineStageFlagBits::eColorAttachmentOutput);
+    endFrame(renderSemaphore);
+    acquiredSemaphore = nullptr;
 }
 
 vk::Semaphore VulkanRenderContext::beginFrame() {
-    return vk::Semaphore();
+    handleSurfaceChanges();
+    auto &prevFrame = *frames.at(activeFrameIndex);
+    auto acquiredSemaphore = prevFrame.requestSemaphore();
+    auto fence = prevFrame.requestFence();
+    auto result = swapchain->acquireNextImage(activeFrameIndex, acquiredSemaphore, fence);
+}
+
+void VulkanRenderContext::submit(const VulkanQueue &queue, const VulkanCommandBuffer &commandBuffer) {
+    VulkanRenderFrame &frame = getActiveFrame();
+    vk::CommandBuffer cmdBuf = commandBuffer.getCommandBuffer();
+    vk::SubmitInfo submitInfo;
+    submitInfo.commandBufferCount = 1;
+    submitInfo.pCommandBuffers = &cmdBuf;
+    vk::Fence fence = frame.requestFence();
+    queue.submit({ submitInfo }, fence);
 }
 
 vk::Semaphore VulkanRenderContext::submit(const VulkanQueue &queue,
                                           const VulkanCommandBuffer &commandBuffer,
                                           vk::Semaphore waitSemaphore,
-                                          vk::PipelineStageFlags wait_pipelineStage) {
-    return vk::Semaphore();
-}
-
-void VulkanRenderContext::submit(const VulkanQueue &queue, const VulkanCommandBuffer &commandBuffer) {
+                                          vk::PipelineStageFlags waitPipelineStage) {
+    VulkanRenderFrame &frame = getActiveFrame();
+    vk::Semaphore signalSemaphore = frame.requestSemaphore();
+    vk::CommandBuffer cmdBuf = commandBuffer.getCommandBuffer();
+    vk::SubmitInfo submitInfo;
+    submitInfo.commandBufferCount = 1;
+    submitInfo.pCommandBuffers = &cmdBuf;
+    submitInfo.waitSemaphoreCount = 1;
+    submitInfo.pWaitSemaphores = &waitSemaphore;
+    submitInfo.pWaitDstStageMask = &waitPipelineStage;
+    submitInfo.signalSemaphoreCount = 1;
+    submitInfo.pSignalSemaphores = &signalSemaphore;
+    vk::Fence fence = frame.requestFence();
+    queue.submit({ submitInfo }, fence);
+    return signalSemaphore;
 }
 
 void VulkanRenderContext::waitFrame() {
+    getActiveFrame().reset();
 }
 
 void VulkanRenderContext::endFrame(vk::Semaphore semaphore) {
+    vk::PresentInfoKHR presentInfo;
+    presentInfo.setWaitSemaphoreCount(1);
+    presentInfo.setPWaitSemaphores(&semaphore);
+    vk::SwapchainKHR swapChains[] = { swapchain->getSwapChain() };
+    presentInfo.setSwapchainCount(1);
+    presentInfo.setPSwapchains(swapChains);
+    presentInfo.setPImageIndices(&activeFrameIndex);
+
+    vk::Result result = device.getPresentQueue().present(presentInfo);
+    if (result == vk::Result::eErrorOutOfDateKHR || result == vk::Result::eSuboptimalKHR) {
+        handleSurfaceChanges();
+    } else if (result != vk::Result::eSuccess) {
+        ELMT_CORE_ERROR("failed to present swap chain image!");
+    }
 }
 
 VulkanRenderFrame &VulkanRenderContext::getActiveFrame() {
-    // TODO: insert return statement here
+    return *frames.at(activeFrameIndex);
 }
 
 uint32_t VulkanRenderContext::getActiveFrameIndex() {
-    return uint32_t();
+    return activeFrameIndex;
 }
 
 VulkanRenderFrame &VulkanRenderContext::getLastRenderedFrame() {
@@ -163,7 +216,7 @@ VulkanRenderFrame &VulkanRenderContext::getLastRenderedFrame() {
 }
 
 vk::Semaphore VulkanRenderContext::requestSemaphore() {
-    return vk::Semaphore();
+    return getActiveFrame().requestSemaphore();
 }
 
 } // namespace Elements

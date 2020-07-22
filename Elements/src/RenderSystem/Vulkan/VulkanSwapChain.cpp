@@ -7,7 +7,8 @@
 #include <GLFW/glfw3.h>
 
 namespace Elements {
-VulkanSwapchain::VulkanSwapchain(VulkanDevice &device, vk::SurfaceKHR surface) : device{ device } {
+VulkanSwapchain::VulkanSwapchain(VulkanDevice &device, vk::SurfaceKHR surface) :
+device{ device }, surface{ surface } {
 
     SwapChainSupportDetails swapChainSupport
       = device.querySwapChainSupport(device.getPhysicalDevice(), surface);
@@ -62,6 +63,15 @@ VulkanSwapchain::VulkanSwapchain(VulkanDevice &device, vk::SurfaceKHR surface) :
 
 VulkanSwapchain::~VulkanSwapchain() {
     device.getHandle().destroy(handle);
+}
+
+vk::Result
+VulkanSwapchain::acquireNextImage(uint32_t &imageIndex, vk::Semaphore imageAcquiredSemaphore, vk::Fence fence) {
+    return device.getHandle().acquireNextImageKHR(handle,
+                                                  std::numeric_limits<uint64_t>::max(),
+                                                  imageAcquiredSemaphore,
+                                                  fence,
+                                                  &imageIndex);
 }
 
 vk::SurfaceFormatKHR
