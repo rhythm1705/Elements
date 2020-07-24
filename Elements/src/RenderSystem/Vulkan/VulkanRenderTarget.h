@@ -1,12 +1,13 @@
 #pragma once
 
+#include "VulkanImage.h"
+#include "VulkanImageView.h"
+
 #include <vulkan/vulkan.hpp>
 
 namespace Elements {
 
 class VulkanDevice;
-class VulkanImage;
-class VulkanImageView;
 
 struct Attachment {
     vk::Format format{ vk::Format::eUndefined };
@@ -25,9 +26,15 @@ class VulkanRenderTarget {
     VulkanRenderTarget(std::vector<VulkanImage> &&images);
     //~VulkanRenderTarget();
 
-    const vk::Extent2D &getExtent() const { return extent; };
-    const std::vector<VulkanImageView> &getImageViews() const { return imageViews; };
-    const std::vector<Attachment> &getAttachments() const { return attachments; };
+    const vk::Extent2D &getExtent() const {
+        return extent;
+    };
+    const std::vector<VulkanImageView> &getImageViews() const {
+        return imageViews;
+    };
+    const std::vector<Attachment> &getAttachments() const {
+        return attachments;
+    };
 
   private:
     VulkanDevice &device;

@@ -3,7 +3,6 @@
 #include "VulkanCommandBuffers.h"
 #include "VulkanDevice.h"
 #include "VulkanImage.h"
-#include "VulkanQueue.h"
 #include "VulkanRenderFrame.h"
 #include "VulkanRenderTarget.h"
 #include "VulkanSwapChain.h"
@@ -11,7 +10,7 @@
 namespace Elements {
 VulkanRenderContext::VulkanRenderContext(VulkanDevice &device, vk::SurfaceKHR surface, uint32_t width, uint32_t height) :
 device{ device }, surfaceExtent{ width, height }, queue{ device.getGraphicsQueue() } {
-    if (surface != VK_NULL_HANDLE) {
+    if (surface) {
         swapchain = std::make_unique<VulkanSwapchain>(device, surface);
     }
 }
@@ -40,7 +39,7 @@ uint32_t VulkanRenderContext::getActiveFrameIndex() const {
 }
 
 std::vector<std::unique_ptr<VulkanRenderFrame>> &VulkanRenderContext::getRenderFrames() {
-    // TODO: insert return statement here
+    return frames;
 }
 
 void VulkanRenderContext::handleSurfaceChanges() {
@@ -130,7 +129,7 @@ void VulkanRenderContext::recreateSwapchain() {
 
 VulkanCommandBuffer &VulkanRenderContext::begin() {
     acquiredSemaphore = beginFrame();
-    if (acquiredSemaphore == VK_NULL_HANDLE) {
+    if (!acquiredSemaphore) {
         ELMT_CORE_ERROR("Could not start frame.");
     }
     const auto queue = device.getGraphicsQueue();
@@ -150,6 +149,7 @@ vk::Semaphore VulkanRenderContext::beginFrame() {
     auto acquiredSemaphore = prevFrame.requestSemaphore();
     auto fence = prevFrame.requestFence();
     auto result = swapchain->acquireNextImage(activeFrameIndex, acquiredSemaphore, fence);
+    return acquiredSemaphore;
 }
 
 void VulkanRenderContext::submit(const VulkanQueue &queue, const VulkanCommandBuffer &commandBuffer) {
@@ -212,7 +212,7 @@ uint32_t VulkanRenderContext::getActiveFrameIndex() {
 }
 
 VulkanRenderFrame &VulkanRenderContext::getLastRenderedFrame() {
-    // TODO: insert return statement here
+    return *frames.at(activeFrameIndex);
 }
 
 vk::Semaphore VulkanRenderContext::requestSemaphore() {

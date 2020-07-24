@@ -1,4 +1,4 @@
-#include "VulkanFrameBuffers.h"
+#include "VulkanFrameBuffer.h"
 
 #include "VulkanDevice.h"
 #include "VulkanImageView.h"
@@ -7,10 +7,8 @@
 
 namespace Elements {
 
-VulkanFramebuffer::VulkanFramebuffer(VulkanDevice &device,
-                                     const VulkanRenderTarget &renderTarget,
-                                     const VulkanRenderPass &renderPass)
-: device{ device }, extent{ renderTarget.getExtent() } {
+VulkanFramebuffer::VulkanFramebuffer(VulkanDevice &device, const VulkanRenderTarget &renderTarget, const VulkanRenderPass &renderPass) :
+device{ device }, extent{ renderTarget.getExtent() } {
     std::vector<vk::ImageView> attachments;
     for (auto &view : renderTarget.getImageViews()) {
         attachments.emplace_back(view.getHandle());
@@ -28,7 +26,7 @@ VulkanFramebuffer::VulkanFramebuffer(VulkanDevice &device,
 }
 
 VulkanFramebuffer::~VulkanFramebuffer() {
-    if (handle != VK_NULL_HANDLE) {
+    if (handle) {
         device.getHandle().destroyFramebuffer(handle, nullptr);
     }
 }

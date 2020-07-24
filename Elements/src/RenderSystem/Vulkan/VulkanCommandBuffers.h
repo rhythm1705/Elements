@@ -1,10 +1,11 @@
 #pragma once
 
+#include "VulkanCommandPool.h"
+
 #include <vulkan/vulkan.hpp>
 
 namespace Elements {
 
-class VulkanCommandPool;
 class VulkanRenderPass;
 class VulkanRenderTarget;
 class VulkanFramebuffer;
@@ -12,15 +13,17 @@ class VulkanGraphicsPipeline;
 
 class VulkanCommandBuffer {
   public:
-    VulkanCommandBuffer(VulkanCommandPool commandPool);
+    VulkanCommandBuffer(VulkanCommandPool &commandPool);
     ~VulkanCommandBuffer();
 
-    const vk::CommandBuffer getCommandBuffer() const { return handle; };
+    const vk::CommandBuffer &getCommandBuffer() const {
+        return handle;
+    };
 
     vk::Result begin();
     void end();
-    void beginRenderPass(VulkanRenderPass renderPass,
-                         VulkanFramebuffer framebuffer,
+    void beginRenderPass(VulkanRenderPass &renderPass,
+                         VulkanFramebuffer &framebuffer,
                          VulkanRenderTarget &renderTarget,
                          std::vector<vk::ClearValue> clearValues);
     void bindPipeline(VulkanGraphicsPipeline pipeline);
@@ -35,7 +38,7 @@ class VulkanCommandBuffer {
   private:
     vk::CommandBuffer handle;
 
-    VulkanCommandPool commandPool;
+    VulkanCommandPool &commandPool;
     RenderPassBinding renderPassBinding;
 };
 

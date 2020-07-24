@@ -8,8 +8,9 @@ namespace Elements {
 VulkanRenderPass::VulkanRenderPass(VulkanDevice &device,
                                    const std::vector<Attachment> &attachments,
                                    const std::vector<LoadStoreInfo> &loadStoreInfos,
-                                   const std::vector<SubpassInfo> &subpasses)
-: device{ device }, subpassCount{ std::max<size_t>(1, subpasses.size()) } {
+                                   const std::vector<SubpassInfo> &subpasses) :
+device{ device },
+subpassCount{ std::max<size_t>(1, subpasses.size()) } {
     // Get all attachment descriptions
     std::vector<vk::AttachmentDescription> attachmentDescriptions;
     for (size_t i = 0U; i < attachments.size(); ++i) {
@@ -47,8 +48,12 @@ VulkanRenderPass::VulkanRenderPass(VulkanDevice &device,
     subpassDescriptions.reserve(subpassCount);
     for (size_t i = 0; i < subpasses.size(); ++i) {
         auto &subpass = subpasses[i];
-        vk::SubpassDescription subpassDescription(vk::SubpassDescriptionFlags(), vk::PipelineBindPoint::eGraphics,
-                                                  0, nullptr, 1, colorAttachments[i].data());
+        vk::SubpassDescription subpassDescription(vk::SubpassDescriptionFlags(),
+                                                  vk::PipelineBindPoint::eGraphics,
+                                                  0,
+                                                  nullptr,
+                                                  1,
+                                                  colorAttachments[i].data());
         subpassDescriptions.push_back(subpassDescription);
     }
 
@@ -63,15 +68,20 @@ VulkanRenderPass::VulkanRenderPass(VulkanDevice &device,
         subpassDependencies[i].setDstAccessMask(vk::AccessFlagBits::eColorAttachmentWrite);
     }
 
-    vk::RenderPassCreateInfo renderPassInfo(vk::RenderPassCreateFlags(), 1, attachmentDescriptions.data(),
-                                            1, subpassDescriptions.data(), 1, subpassDependencies.data());
+    vk::RenderPassCreateInfo renderPassInfo(vk::RenderPassCreateFlags(),
+                                            1,
+                                            attachmentDescriptions.data(),
+                                            1,
+                                            subpassDescriptions.data(),
+                                            1,
+                                            subpassDependencies.data());
     if (device.getHandle().createRenderPass(&renderPassInfo, nullptr, &handle) != vk::Result::eSuccess) {
         ELMT_CORE_ERROR("failed to create render pass!");
     }
 }
 
 VulkanRenderPass::~VulkanRenderPass() {
-    if (handle != VK_NULL_HANDLE) {
+    if (handle) {
         device.getHandle().destroyRenderPass(handle);
     }
 }

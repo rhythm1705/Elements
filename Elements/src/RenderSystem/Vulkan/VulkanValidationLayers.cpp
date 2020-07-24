@@ -7,17 +7,17 @@ namespace Elements {
 vk::DebugUtilsMessengerEXT VulkanValidationLayers::debugMessenger;
 vk::DispatchLoaderDynamic VulkanValidationLayers::dispatcher;
 
-VulkanValidationLayers::VulkanValidationLayers() {
+VulkanValidationLayers::VulkanValidationLayers(VulkanInstance &instance) {
     if (enableValidationLayers && !checkValidationLayersSupport()) {
         ELMT_CORE_CRITICAL("Validation Layers requested but not supported.");
     }
 }
 
-VulkanValidationLayers::~VulkanValidationLayers() {}
+VulkanValidationLayers::~VulkanValidationLayers() {
+}
 
 void VulkanValidationLayers::destroyDebugMessenger() {
-    VulkanInstance::getInstance()->getVulkanInstance().destroyDebugUtilsMessengerEXT(
-      debugMessenger, nullptr, dispatcher);
+    instance.getHandle().destroyDebugUtilsMessengerEXT(debugMessenger, nullptr, dispatcher);
 }
 
 bool VulkanValidationLayers::checkValidationLayersSupport() {
@@ -38,7 +38,8 @@ bool VulkanValidationLayers::checkValidationLayersSupport() {
 }
 
 void VulkanValidationLayers::setupDebugMessenger() {
-    if (!enableValidationLayers) return;
+    if (!enableValidationLayers)
+        return;
     vk::DebugUtilsMessengerCreateInfoEXT createInfo;
     populateDebugMessengerCreateInfo(createInfo);
 
@@ -46,10 +47,9 @@ void VulkanValidationLayers::setupDebugMessenger() {
     const PFN_vkGetInstanceProcAddr vkGetInstanceProcAddr
       = dl.getProcAddress<PFN_vkGetInstanceProcAddr>("vkGetInstanceProcAddr");*/
 
-    dispatcher = vk::DispatchLoaderDynamic(VulkanInstance::getInstance()->getVulkanInstance(), vkGetInstanceProcAddr);
+    dispatcher = vk::DispatchLoaderDynamic(instance.getHandle(), vkGetInstanceProcAddr);
 
-    debugMessenger = VulkanInstance::getInstance()->getVulkanInstance().createDebugUtilsMessengerEXT(
-      createInfo, nullptr, dispatcher);
+    debugMessenger = instance.getHandle().createDebugUtilsMessengerEXT(createInfo, nullptr, dispatcher);
     ELMT_CORE_TRACE("Validation Layers Enabled!");
 }
 

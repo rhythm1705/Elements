@@ -1,10 +1,12 @@
 #pragma once
 
+#include "VulkanDevice.h"
+
+
 #include <vulkan/vulkan.hpp>
 
 namespace Elements {
 
-class VulkanDevice;
 class VulkanRenderFrame;
 class VulkanCommandBuffer;
 

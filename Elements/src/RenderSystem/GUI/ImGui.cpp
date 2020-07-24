@@ -1,7 +1,6 @@
 #include "ImGui.h"
 
 #include "Core/Application.h"
-#include "RenderSystem/Vulkan/VulkanAPI.h"
 
 namespace Elements {
 

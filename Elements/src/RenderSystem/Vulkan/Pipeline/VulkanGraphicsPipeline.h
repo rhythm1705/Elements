@@ -1,11 +1,13 @@
 #pragma once
 
+#include "VulkanPipelineState.h"
+
 #include <vulkan/vulkan.hpp>
+
 
 namespace Elements {
 
 class VulkanDevice;
-class VulkanPipelineState;
 
 class VulkanGraphicsPipeline {
   public:

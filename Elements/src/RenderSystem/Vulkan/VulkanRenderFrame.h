@@ -1,12 +1,13 @@
 #pragma once
 
+#include "VulkanFencePool.h"
+#include "VulkanSemaphorePool.h"
+
 #include <vulkan/vulkan.hpp>
 
 namespace Elements {
 
 class VulkanDevice;
-class VulkanFencePool;
-class VulkanSemaphorePool;
 class VulkanRenderTarget;
 class VulkanCommandPool;
 class VulkanCommandBuffer;

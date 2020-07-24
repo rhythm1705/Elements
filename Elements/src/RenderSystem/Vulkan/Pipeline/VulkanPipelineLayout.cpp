@@ -14,7 +14,7 @@ device{ device }, shaderModules{ shaderModules } {
 }
 
 VulkanPipelineLayout::~VulkanPipelineLayout() {
-    if (handle != VK_NULL_HANDLE) {
+    if (handle) {
         device.getHandle().destroyPipelineLayout(handle);
     }
 }

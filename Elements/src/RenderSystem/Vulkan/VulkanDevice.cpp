@@ -2,7 +2,6 @@
 
 #include "VulkanFrameBuffer.h"
 #include "VulkanInstance.h"
-#include "VulkanQueue.h"
 #include "VulkanSwapChain.h"
 
 namespace Elements {
@@ -10,12 +9,13 @@ namespace Elements {
 VulkanDevice::VulkanDevice(vk::Instance instance, vk::SurfaceKHR surface) {
     pickPhysicalDevice(instance, surface);
     createLogicalDevice(surface);
-    queues.emplace_back(*this, queueFamilyIndices.graphicsFamily.has_value(), false);
-    queues.emplace_back(*this, queueFamilyIndices.presentFamily.has_value(), true);
+    queues.reserve(2);
+    queues.emplace_back(*this, queueFamilyIndices.graphicsFamily.value(), false);
+    queues.emplace_back(*this, queueFamilyIndices.presentFamily.value(), true);
 }
 
 VulkanDevice::~VulkanDevice() {
-    if (handle != VK_NULL_HANDLE) {
+    if (handle) {
         handle.destroy();
     }
 }

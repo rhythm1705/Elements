@@ -39,7 +39,7 @@ VulkanInstance::VulkanInstance(const std::string &appName,
 }
 
 VulkanInstance::~VulkanInstance() {
-    if (handle != VK_NULL_HANDLE) {
+    if (handle) {
         handle.destroySurfaceKHR(surface);
         handle.destroy();
     }

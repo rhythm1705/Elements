@@ -4,7 +4,6 @@
 #include "RenderSystem/Vulkan/VulkanRenderPass.h"
 #include "RenderSystem/Vulkan/VulkanShaderModule.h"
 #include "VulkanPipelineLayout.h"
-#include "VulkanPipelineState.h"
 
 namespace Elements {
 

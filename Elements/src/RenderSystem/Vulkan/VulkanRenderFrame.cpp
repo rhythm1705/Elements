@@ -3,9 +3,7 @@
 #include "VulkanCommandBuffers.h"
 #include "VulkanCommandPool.h"
 #include "VulkanDevice.h"
-#include "VulkanFencePool.h"
 #include "VulkanRenderTarget.h"
-#include "VulkanSemaphorePool.h"
 
 namespace Elements {
 
@@ -43,7 +41,7 @@ void VulkanRenderFrame::updateRenderTarget(std::unique_ptr<VulkanRenderTarget> &
 }
 
 VulkanCommandBuffer &VulkanRenderFrame::getCommandBufer() {
-    commandPool->getCommandBuffer();
+    return commandPool->getCommandBuffer();
 }
 
 vk::Fence VulkanRenderFrame::requestFence() {

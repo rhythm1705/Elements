@@ -22,7 +22,7 @@ VulkanImageView::VulkanImageView(VulkanImage &img, vk::ImageViewType viewType, v
 }
 
 VulkanImageView::~VulkanImageView() {
-    if (handle != VK_NULL_HANDLE) {
+    if (handle) {
         device.getHandle().destroyImageView(handle);
     }
 }

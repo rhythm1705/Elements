@@ -1,13 +1,12 @@
 #include "VulkanCommandPool.h"
 
 #include "VulkanCommandBuffers.h"
-#include "VulkanDevice.h"
 #include "VulkanRenderFrame.h"
 #include "VulkanRenderTarget.h"
 
 namespace Elements {
 
-VulkanCommandPool::VulkanCommandPool(VulkanDevice &d, QueueFamilyIndices queueFamilyIndices, VulkanRenderFrame *renderFrame) :
+VulkanCommandPool::VulkanCommandPool(VulkanDevice &device, QueueFamilyIndices queueFamilyIndices, VulkanRenderFrame *renderFrame) :
 device{ device }, renderFrame{ renderFrame } {
     vk::CommandPoolCreateInfo poolInfo(vk::CommandPoolCreateFlags(),
                                        queueFamilyIndices.graphicsFamily.value());

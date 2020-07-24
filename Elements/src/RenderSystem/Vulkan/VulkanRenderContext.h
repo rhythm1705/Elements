@@ -1,11 +1,12 @@
 #pragma once
 
+#include "VulkanQueue.h"
+
 #include <vulkan/vulkan.hpp>
 
 namespace Elements {
 
 class VulkanDevice;
-class VulkanQueue;
 class VulkanRenderFrame;
 class VulkanSwapchain;
 class VulkanCommandBuffer;
@@ -85,8 +86,6 @@ class VulkanRenderContext {
     VulkanRenderFrame &getLastRenderedFrame();
 
     vk::Semaphore requestSemaphore();
-
-    VulkanDevice &getDevice();
 
     // Returns the format that the RenderTargets are created with within the RenderContext
     vk::Format getFormat();

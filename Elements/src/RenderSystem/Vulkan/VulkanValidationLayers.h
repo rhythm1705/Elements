@@ -11,22 +11,28 @@ const bool enableValidationLayers = true;
 const std::vector<const char *> validationLayers = { "VK_LAYER_KHRONOS_validation" };
 
 namespace Elements {
+
+class VulkanInstance;
+
 class VulkanValidationLayers {
   public:
-    VulkanValidationLayers();
+    VulkanValidationLayers(VulkanInstance &instance);
     ~VulkanValidationLayers();
 
     static void setupDebugMessenger();
     static void destroyDebugMessenger();
     bool checkValidationLayersSupport();
     static void populateDebugMessengerCreateInfo(vk::DebugUtilsMessengerCreateInfoEXT &createInfo);
-    static vk::DispatchLoaderDynamic &getDynamicDispatcher() { return dispatcher; }
+    static vk::DispatchLoaderDynamic &getDynamicDispatcher() {
+        return dispatcher;
+    }
 
   private:
     static VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity,
                                                         VkDebugUtilsMessageTypeFlagsEXT messageType,
                                                         const VkDebugUtilsMessengerCallbackDataEXT *callbackData,
                                                         void *userData);
+    static VulkanInstance &instance;
 
     static vk::DebugUtilsMessengerEXT debugMessenger;
     static vk::DispatchLoaderDynamic dispatcher;
