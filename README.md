@@ -2,6 +2,15 @@
 
 > An awesome game engine to learn C++, Vulkan, computer graphics rendering and most importantly to have fun.
 
+## Current Progress
+
+- [x] Window creation and resizing using GLFW
+- [x] Keyboard and Mouse Input
+- [x] Logging
+- [ ] GUI setup using ImGUI (In progress)
+- [ ] Vulkan setup (In progress)
+- [ ] Building 2d renderer
+
 ## The Architecture
 
 The Elements Project provides the framework to develop games.
