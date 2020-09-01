@@ -2,6 +2,8 @@
 
 #include "VulkanFrameBuffer.h"
 #include "VulkanInstance.h"
+#include "VulkanRenderPass.h"
+#include "VulkanRenderTarget.h"
 #include "VulkanSwapChain.h"
 
 namespace Elements {
@@ -18,6 +20,16 @@ VulkanDevice::~VulkanDevice() {
     if (handle) {
         handle.destroy();
     }
+}
+
+void VulkanDevice::createFramebuffers(const VulkanRenderTarget &renderTarget, VulkanRenderPass &renderPass) {
+    for (int i = 0; i < renderTarget.getImageViews().size(); ++i) {
+        framebuffers.emplace_back(*this, renderTarget, renderPass);
+    }
+}
+
+void VulkanDevice::clearFramebuffers() {
+    framebuffers.clear();
 }
 
 void VulkanDevice::pickPhysicalDevice(vk::Instance instance, vk::SurfaceKHR surface) {
@@ -99,10 +111,6 @@ bool VulkanDevice::checkDeviceExtensionSupport(vk::PhysicalDevice physicalDevice
         requiredExtensions.erase(std::string(extension.extensionName));
     }
     return requiredExtensions.empty();
-}
-
-void VulkanDevice::clearFramebuffers() {
-    framebuffers.clear();
 }
 
 SwapChainSupportDetails

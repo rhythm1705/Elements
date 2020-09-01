@@ -9,6 +9,7 @@
 #include "Messaging/Message.h"
 #include "Messaging/MessageBus.h"
 #include "Utilities/Log.h"
+#include "RenderSystem/VulkanRenderer.h"
 #include "WindowSystem/Input/KeyCodes.h"
 #include "WindowSystem/Input/MouseCodes.h"
 

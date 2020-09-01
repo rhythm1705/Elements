@@ -4,10 +4,11 @@
 
 namespace Elements {
 
+
 vk::DebugUtilsMessengerEXT VulkanValidationLayers::debugMessenger;
 vk::DispatchLoaderDynamic VulkanValidationLayers::dispatcher;
 
-VulkanValidationLayers::VulkanValidationLayers(VulkanInstance &instance) {
+VulkanValidationLayers::VulkanValidationLayers() {
     if (enableValidationLayers && !checkValidationLayersSupport()) {
         ELMT_CORE_CRITICAL("Validation Layers requested but not supported.");
     }
@@ -16,7 +17,7 @@ VulkanValidationLayers::VulkanValidationLayers(VulkanInstance &instance) {
 VulkanValidationLayers::~VulkanValidationLayers() {
 }
 
-void VulkanValidationLayers::destroyDebugMessenger() {
+void VulkanValidationLayers::destroyDebugMessenger(VulkanInstance &instance) {
     instance.getHandle().destroyDebugUtilsMessengerEXT(debugMessenger, nullptr, dispatcher);
 }
 
@@ -37,7 +38,7 @@ bool VulkanValidationLayers::checkValidationLayersSupport() {
     return true;
 }
 
-void VulkanValidationLayers::setupDebugMessenger() {
+void VulkanValidationLayers::setupDebugMessenger(VulkanInstance &instance) {
     if (!enableValidationLayers)
         return;
     vk::DebugUtilsMessengerCreateInfoEXT createInfo;

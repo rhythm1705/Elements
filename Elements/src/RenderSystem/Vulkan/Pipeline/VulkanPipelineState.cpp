@@ -152,9 +152,9 @@ void VulkanPipelineState::setRasterizationState(const RasterizationState &newRas
 }
 
 void VulkanPipelineState::setViewportState(const ViewportState &newViewportState) {
-    if (viewportState != newViewportState) {
-        viewportState = newViewportState;
-    }
+    // if (viewportState != newViewportState) {
+    viewportState = newViewportState;
+    //}
 }
 
 void VulkanPipelineState::setMultisampleState(const MultisampleState &newMultisampleState) {

@@ -11,10 +11,17 @@ class VulkanImage {
     VulkanImage(VulkanDevice &device, vk::Image handle, const vk::Extent2D &extent, vk::Format format);
     ~VulkanImage();
 
-    vk::Image getHandle() const { return handle; };
+    vk::Image getHandle() const {
+        return handle;
+    };
 
-    VulkanDevice &getDevice() { return device; };
-    vk::Format getFormat() const { return format; };
+    VulkanDevice &getDevice() {
+        return device;
+    };
+    vk::Format getFormat() const {
+        return format;
+    };
+    vk::Extent2D getExtent() const;
 
   private:
     vk::Image handle;
@@ -23,7 +30,7 @@ class VulkanImage {
 
     vk::Extent2D extent;
     vk::Format format;
-    //vk::ImageUsageFlags imageUsage;
+    // vk::ImageUsageFlags imageUsage;
 };
 
 } // namespace Elements

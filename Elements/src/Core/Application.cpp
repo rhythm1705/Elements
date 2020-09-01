@@ -10,6 +10,10 @@ Application::Application() {
     instance = this;
     windowSystem = std::make_unique<WindowSystem>();
     renderSystem = std::make_unique<RenderSystem>();
+
+    // Start up all systems
+    windowSystem->startUp();
+    renderSystem->startUp();
 }
 
 Application::~Application() {
@@ -29,10 +33,6 @@ void Application::pushOverlay(Layer *layer) {
 }
 
 void Application::run() {
-    // Start up all systems
-    windowSystem->startUp();
-    renderSystem->startUp();
-
     // Get the message bus
     auto bus = MessageBus::getBus();
 

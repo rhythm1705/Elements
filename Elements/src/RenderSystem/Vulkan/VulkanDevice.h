@@ -7,6 +7,8 @@
 namespace Elements {
 
 class VulkanFramebuffer;
+class VulkanRenderTarget;
+class VulkanRenderPass;
 
 struct QueueFamilyIndices {
     std::optional<uint32_t> graphicsFamily;
@@ -28,6 +30,10 @@ class VulkanDevice {
     VulkanDevice(vk::Instance instance, vk::SurfaceKHR surface);
     ~VulkanDevice();
 
+    void createFramebuffers(const VulkanRenderTarget &renderTarget, VulkanRenderPass &renderPass);
+
+    void clearFramebuffers();
+
     vk::Device getHandle() const {
         return handle;
     }
@@ -46,8 +52,6 @@ class VulkanDevice {
     VulkanQueue &getPresentQueue() {
         return queues[1];
     }
-
-    void clearFramebuffers();
 
     SwapChainSupportDetails querySwapChainSupport(vk::PhysicalDevice physicalDevice, vk::SurfaceKHR surface);
 

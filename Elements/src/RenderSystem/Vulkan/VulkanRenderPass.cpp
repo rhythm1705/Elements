@@ -18,12 +18,12 @@ subpassCount{ std::max<size_t>(1, subpasses.size()) } {
         attachment.setFormat(attachments[i].format);
         attachment.setSamples(attachments[i].samples);
         attachment.setInitialLayout(attachments[i].initialLayout);
-        attachment.setFinalLayout(vk::ImageLayout::eColorAttachmentOptimal);
+        attachment.setFinalLayout(vk::ImageLayout::ePresentSrcKHR);
         if (i < loadStoreInfos.size()) {
             attachment.setLoadOp(loadStoreInfos[i].loadOp);
             attachment.setStoreOp(loadStoreInfos[i].storeOp);
-            attachment.setStencilLoadOp(loadStoreInfos[i].loadOp);
-            attachment.setStencilStoreOp(loadStoreInfos[i].storeOp);
+            attachment.setStencilLoadOp(vk::AttachmentLoadOp::eDontCare);
+            attachment.setStencilStoreOp(vk::AttachmentStoreOp::eDontCare);
         }
         attachmentDescriptions.push_back(std::move(attachment));
     }

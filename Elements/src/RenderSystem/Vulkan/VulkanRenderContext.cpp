@@ -10,7 +10,9 @@
 namespace Elements {
 VulkanRenderContext::VulkanRenderContext(VulkanDevice &device, vk::SurfaceKHR surface, uint32_t width, uint32_t height) :
 device{ device }, surfaceExtent{ width, height }, queue{ device.getGraphicsQueue() } {
+    ELMT_CORE_INFO("Chencking surface.");
     if (surface) {
+        ELMT_CORE_INFO("Creating Swap chain.");
         swapchain = std::make_unique<VulkanSwapchain>(device, surface);
     }
 }

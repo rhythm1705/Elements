@@ -10,8 +10,13 @@ class VulkanInstance {
     VulkanInstance(const std::string &appName, const int appVersion, const std::string &engineName, const int engineVersion);
     ~VulkanInstance();
 
-    vk::Instance getHandle() { return handle; };
-    vk::SurfaceKHR getSurface() { return surface; };
+    vk::Instance getHandle() {
+        return handle;
+    };
+
+    vk::SurfaceKHR getSurface() {
+        return surface;
+    };
 
   private:
     std::vector<const char *> getRequiredExtensions();

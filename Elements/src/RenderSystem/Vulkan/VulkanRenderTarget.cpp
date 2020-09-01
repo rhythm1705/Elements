@@ -2,8 +2,7 @@
 
 namespace Elements {
 
-Attachment::Attachment(vk::Format format, vk::SampleCountFlagBits samples, vk::ImageUsageFlags usage) :
-format{ format }, samples{ samples }, usage{ usage } {
+Attachment::Attachment(vk::Format format) : format{ format } {
 }
 
 const std::unique_ptr<VulkanRenderTarget> VulkanRenderTarget::createRenderTarget(VulkanImage &&image) {
@@ -22,6 +21,7 @@ device{ images.back().getDevice() }, images{ std::move(images) } {
         // attachments.emplace_back(Attachment{ image.getFormat(), image.get_sample_count(),
         // image.get_usage() });
     }
+    extent = images.back().getExtent();
 }
 
 } // namespace Elements

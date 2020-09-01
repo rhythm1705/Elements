@@ -16,11 +16,11 @@ class VulkanInstance;
 
 class VulkanValidationLayers {
   public:
-    VulkanValidationLayers(VulkanInstance &instance);
+    VulkanValidationLayers();
     ~VulkanValidationLayers();
 
-    static void setupDebugMessenger();
-    static void destroyDebugMessenger();
+    static void setupDebugMessenger(VulkanInstance &instance);
+    static void destroyDebugMessenger(VulkanInstance &instance);
     bool checkValidationLayersSupport();
     static void populateDebugMessengerCreateInfo(vk::DebugUtilsMessengerCreateInfoEXT &createInfo);
     static vk::DispatchLoaderDynamic &getDynamicDispatcher() {
@@ -32,7 +32,6 @@ class VulkanValidationLayers {
                                                         VkDebugUtilsMessageTypeFlagsEXT messageType,
                                                         const VkDebugUtilsMessengerCallbackDataEXT *callbackData,
                                                         void *userData);
-    static VulkanInstance &instance;
 
     static vk::DebugUtilsMessengerEXT debugMessenger;
     static vk::DispatchLoaderDynamic dispatcher;

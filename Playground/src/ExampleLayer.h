@@ -6,6 +6,10 @@ class ExampleLayer : public Elements::Layer {
   public:
     ExampleLayer() : Layer("Example"){};
 
+    void onAttach() override {
+        Elements::VulkanRenderer::drawTriangle();
+    }
+
     void onUpdate() override {
         // ELMT_INFO("Example Layer updated!");
         auto bus = Elements::MessageBus::getBus();
@@ -17,5 +21,6 @@ class ExampleLayer : public Elements::Layer {
         }
     }
 
-    void handleMessage(Elements::Message *msg) override {}
+    void handleMessage(Elements::Message *msg) override {
+    }
 };

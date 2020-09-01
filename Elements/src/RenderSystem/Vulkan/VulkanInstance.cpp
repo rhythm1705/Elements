@@ -13,8 +13,12 @@ VulkanInstance::VulkanInstance(const std::string &appName,
                                const int engineVersion) {
     vk::ApplicationInfo appInfo(appName.c_str(), appVersion, engineName.c_str(), engineVersion, VK_API_VERSION_1_2);
     auto extensions = getRequiredExtensions();
-    vk::InstanceCreateInfo createInfo(vk::InstanceCreateFlags(), &appInfo, 0, {},
-                                      static_cast<uint32_t>(extensions.size()), extensions.data());
+    vk::InstanceCreateInfo createInfo(vk::InstanceCreateFlags(),
+                                      &appInfo,
+                                      0,
+                                      {},
+                                      static_cast<uint32_t>(extensions.size()),
+                                      extensions.data());
 
     vk::DebugUtilsMessengerCreateInfoEXT debugCreateInfo;
     if (enableValidationLayers) {
@@ -32,6 +36,8 @@ VulkanInstance::VulkanInstance(const std::string &appName,
         ELMT_CORE_ERROR("Failed to create vulkan instance!");
     }
 
+    VulkanValidationLayers::setupDebugMessenger(*this);
+
     auto window = Application::get().getWindow().getWindowPtr();
     if (glfwCreateWindowSurface(handle, window, nullptr, reinterpret_cast<VkSurfaceKHR *>(&surface)) != VK_SUCCESS) {
         ELMT_CORE_ERROR("Failed to create vulkan window surface!");
@@ -41,6 +47,7 @@ VulkanInstance::VulkanInstance(const std::string &appName,
 VulkanInstance::~VulkanInstance() {
     if (handle) {
         handle.destroySurfaceKHR(surface);
+        VulkanValidationLayers::destroyDebugMessenger(*this);
         handle.destroy();
     }
 }
